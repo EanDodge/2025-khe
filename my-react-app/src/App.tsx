@@ -9,6 +9,7 @@ function App() {
 
   return (
     <>
+    <div className = "body">
       <div className = "logo">
         <img src={saxLogo} alt="Saxaphone" />
       </div>
@@ -26,7 +27,7 @@ function App() {
 
         
         
-
+    </div>
     </>
   )
 }
