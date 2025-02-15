@@ -6,3 +6,5 @@ Haxaphone
 -Home page that will be able to bring you to different parts of the website
 -We need consistency throuogh pages
 -
+-
+- Hi ean
