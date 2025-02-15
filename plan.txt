@@ -1,2 +1,8 @@
 2025 Kent Hack Enough
 Haxaphone
+-We want a web app that uses flask and C#. Flask is the front end and C# for the background
+-The tutorial page will have a saxaphone on the left with a fingering chart on the right
+-Inclusive buttons all around making sure user can navigate through pages
+-Home page that will be able to bring you to different parts of the website
+-We need consistency throuogh pages
+-
