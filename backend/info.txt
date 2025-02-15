@@ -1,0 +1,6 @@
+saxophone controller:  
+    Takes the input from the keyboard, displays the inputs
+
+measure scroller
+    Main gameplay representation
+    the notes are positioned on the lines yadda yadda yadda 
