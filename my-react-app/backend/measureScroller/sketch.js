@@ -116,6 +116,7 @@ class Metronome {
     if (!this.isPaused && closestMeasureX <= 100 && millis() - this.lastBeatPlayed >= (60 / this.bpm) * 1000) {
       this.metronomeSound.play();
       this.lastBeatPlayed = millis();
+      // flips the metronome image
       this.flip = !this.flip;
     }
   }
