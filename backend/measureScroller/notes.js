@@ -215,7 +215,7 @@ function setup() {
 
   // Fixed canvas width to allow for scrolling across the screen
   canvasWidth = 800;
-  createCanvas(canvasWidth, 400);
+  createCanvas(canvasWidth, 220);
   scrollX = testSong.length() * measureWidth; // Start off-screen
   imageMode(CENTER);
 
@@ -224,7 +224,7 @@ function setup() {
 }
 
 // just for the game, i will always have this as true
-// i FOR THE LIFE OF ME could not implement the scrolling functionality in draw.
+// i FOR THE LIFE OF ME could not implement the scrolling functionality in draw. this was HORRIBLE.
 let autoScroll = true;
 
 function draw() {
