@@ -135,43 +135,37 @@ class Receptor {
   }
 
   display() {
+    stroke(0, 0, 255);
     line(100, 30, 100, 190);
   }
-
-
 }
-
-
-
 
 // p5.js visualization
 let wholeNote;
 let openNote;
 let closedNote;
 
-
 let testSong;
 let testMeasure1, testMeasure2, testMeasure3, testMeasure4;
-
-// TODO
-//  Implement scrollSpeed in Song and draw
-//  Implement a receptor line
-//  Implement noteLength
-//
-//
 
 function preload() {
   wholeNote = loadImage('noteWhole.png');
   openNote = loadImage('noteOpen.png');
   closedNote = loadImage('noteClosed.png');
+  flatSign = loadImage('flat.png');
+  sharpSign = loadImage('sharp.png');
 }
 
 let scrollX = 0;
 let scrollSpeed;
 let measureWidth = 300;
 let canvasWidth;
+let receptor;
 
 function setup() {
+
+  // init receptor
+  receptor = new Receptor();
 
   // initialize measures
   testMeasure1 = new Measure();
@@ -180,17 +174,17 @@ function setup() {
   testMeasure4 = new Measure();
 
   // initialize song
-  testSong = new Song("Hot Cross Buns", 60);
+  testSong = new Song("Hot Cross Buns", 120);
 
   // my song :)
   // hot cross buns
 
   // add notes
   testMeasure1.addNote(new Note("B", 'q'));
-  testMeasure1.addNote(new Note("A", 'q'));
+  testMeasure1.addNote(new Note("Ab", 'q'));
   testMeasure1.addNote(new Note("G", 'h'));
 
-  testMeasure2.addNote(new Note("B", 'q'));
+  testMeasure2.addNote(new Note("Bb", 'q'));
   testMeasure2.addNote(new Note("A", 'q'));
   testMeasure2.addNote(new Note("G", 'h'));
 
@@ -225,16 +219,20 @@ function setup() {
 
 // just for the game, i will always have this as true
 // i FOR THE LIFE OF ME could not implement the scrolling functionality in draw. this was HORRIBLE.
+
+// last thing i need to do, create flat and sharp images
 let autoScroll = true;
 
 function draw() {
   background(220);
+  receptor.display();
+  stroke(0, 0, 0);
 
   // Scroll the song to the left over time
   if (autoScroll) {
     scrollX -= scrollSpeed;
 
-    if (scrollX < -testSong.length * measureWidth) {  
+    if (scrollX < -testSong.length * measureWidth) {
       autoScroll = false;
       scrollX = -testSong.length * measureWidth;
     }
@@ -285,25 +283,109 @@ function draw() {
 
         // Draw note image
         let noteImage;
+        let accidentalImage;
         switch (note.length) {
-          case "w": noteImage = wholeNote; break;
-          case "h": noteImage = openNote; break;
-          case "q": 
-          case "e": 
-          case "s": noteImage = closedNote; break;
+          case "w":
+            noteImage = wholeNote; 
+            if (flat) {
+              accidentalImage = flatSign;
+            }
+            else if (sharp) {
+              accidentalImage = sharpSign;
+            }
+            break;
+          case "h":
+            noteImage = openNote; 
+            if (flat) {
+              accidentalImage = flatSign;
+            }
+            else if (sharp) {
+              accidentalImage = sharpSign;
+            }
+            break;
+          case "q":
+            noteImage = closedNote; 
+            if (flat) {
+              accidentalImage = flatSign;
+            }
+            else if (sharp) {
+              accidentalImage = sharpSign;
+            }
+            break;
+          case "e":
+            noteImage = closedNote; 
+            if (flat) {
+              accidentalImage = flatSign;
+            }
+            else if (sharp) {
+              accidentalImage = sharpSign;
+            }
+            break;
+          case "s":
+            noteImage = closedNote; 
+            if (flat) {
+              accidentalImage = flatSign;
+            }
+            else if (sharp) {
+              accidentalImage = sharpSign;
+            }
+            break;
+        }
+        image(noteImage, xPos + noteWidth / 2, yPos);
+        if (accidentalImage) {
+          image(accidentalImage, 15 + xPos + noteWidth / 2, yPos - 10);
         }
 
-        image(noteImage, xPos + noteWidth / 2, yPos);
+        // draw stems
+        switch(note.length) {
+          case "h":
+            if (notePitch > 1) {
+              line(10 + xPos + noteWidth / 2, yPos, 10 + xPos + noteWidth / 2, yPos - 60);
+            }
+            else if (notePitch <= 1) {
+              line(-10 + xPos + noteWidth / 2, yPos, -10 + xPos + noteWidth / 2, yPos + 60)
+            }
+            break;
+          case "q":
+            if (notePitch > 1) {
+              line(10 + xPos + noteWidth / 2, yPos, 10 + xPos + noteWidth / 2, yPos - 60);
+            }
+            else if (notePitch <= 1) {
+              line(-10 + xPos + noteWidth / 2, yPos, -10 + xPos + noteWidth / 2, yPos + 60)
+            }
+            break;
+          case "e":
+            if (notePitch > 1) {
+              line(10 + xPos + noteWidth / 2, yPos, 10 + xPos + noteWidth / 2, yPos - 60);
+              line(10 + xPos + noteWidth / 2, yPos - 60, 20 + xPos + noteWidth / 2, yPos - 50);
+            }
+            else if (notePitch <= 1) {
+              line(-10 + xPos + noteWidth / 2, yPos, -10 + xPos + noteWidth / 2, yPos + 60)
+              line(-10 + xPos + noteWidth / 2, yPos + 60, -20 + xPos + noteWidth / 2, yPos + 50);
+            }
+            break;
+          case "s":
+            if (notePitch > 1) {
+              line(10 + xPos + noteWidth / 2, yPos, 10 + xPos + noteWidth / 2, yPos - 60);
+              line(10 + xPos + noteWidth / 2, yPos - 60, 20 + xPos + noteWidth / 2, yPos - 50);
+              line(10 + xPos + noteWidth / 2, yPos - 55, 20 + xPos + noteWidth / 2, yPos - 45);
+            }
+            else if (notePitch <= 1) {
+              line(-10 + xPos + noteWidth / 2, yPos, -10 + xPos + noteWidth / 2, yPos + 60)
+              line(-10 + xPos + noteWidth / 2, yPos + 60, -20 + xPos + noteWidth / 2, yPos + 50);
+              line(-10 + xPos + noteWidth / 2, yPos + 55, -20 + xPos + noteWidth / 2, yPos + 45);
+            }
+            break;
+          default:
+            // wholenotes and rests
+        }
       }
-
       // Move to the next beat
       currentBeatPosition += noteDuration;
     }
-
     // Move to the next measure
     currentX += measureWidth;
   }
-
   // Draw final measure line
   line(currentX, 50, currentX, 170);
 }
