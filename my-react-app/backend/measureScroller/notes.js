@@ -42,7 +42,11 @@ class Measure {
   constructor(noteArr) {
     this.notes = noteArr;
     this.maxBeats = 4;
-    this.measureValue = 
+    let sum = 0;
+    for(let i = 0; i < len(noteArr); ++i){
+      sum += noteArr[i].length;
+    }
+    this.measureValue = sum;
   }
   // this adds a note to the measure
   addNote(note) {
