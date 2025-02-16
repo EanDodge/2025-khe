@@ -53,7 +53,9 @@ function Tutorial({ keyBindings }: TutorialProps) { /*React.FC<TutorialProps> = 
 
   // Drawing function for canvas
   const draw = (p5: p5Types) => {
-    p5.background(220);
+    p5.clear(0, 0, 0, 0);
+    // p5.background(0, 0, 0, 0);
+    p5.fill(255, 255, 255);
     p5.text(currentNote || '', 300, 200);
     // Key positions with explicit type
     const keyPositions: KeyPositions = {
