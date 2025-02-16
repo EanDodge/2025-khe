@@ -1,35 +1,21 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import saxLogo from './assets/saximage2.webp'
-//import viteLogo from '/vite.svg'
-import './App.css'
+import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
+import Home from './Home';  
+import Play from './Play'; 
+import Tutorial from './Tutorial'; 
+import Settings from './Settings'; 
+
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-    <div className = "body">
-      <div className = "logo">
-        <img src={saxLogo} alt="Saxaphone" />
-      </div>
-      <button className="option1" onClick={() => setCount((count) => count + 4)}>
-          Play!
-        </button>
-        <button className="option2" onClick={() => setCount((count) => count + 2)}>
-          Tutorial
-        </button>
-        <button className="option3" onClick={() => setCount((count) => count + 1)}>
-          Settings
-        </button>
-
-      <h1 className = "title">Haxophone</h1>
-
-        
-        
-    </div>
-    </>
-  )
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />  
+        <Route path="/Play" element={<Play />} /> 
+        <Route path="/Tutorial" element={<Tutorial />} />  
+        <Route path="/Settings" element={<Settings />} />   
+      </Routes>
+    </Router>
+  );
 }
 
-export default App
+export default App;

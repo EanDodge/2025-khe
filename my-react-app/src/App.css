@@ -5,7 +5,8 @@
   text-align: center;
 }
 .body {
-  background-color: #4B4B4C
+  background-color: #2020f3;
+  min-height: 100vh;
 }
 
 .logo {
@@ -16,8 +17,8 @@
 }
 .logo {
   position: fixed;
-  top: -45%; 
-  left: -100px;
+  top: -61vh; 
+  left: -25vh;
   transform: translateY(-50%); 
   transform: rotate(10deg);
   width: 200px;
@@ -25,15 +26,15 @@
 }
 
 .logo img {
-  width: 400%;
-  height: 400%;
+  width: 600%;
+  height: 600%;
   object-fit: contain;
 }
 
 
 .title {
-  top:0;
-  left:34%;
+  top:10vh;
+  left:74vh;
   position: absolute;
   width: 500px;
   height: 500px;
@@ -80,19 +81,19 @@
   z-index:1;
 }
 .option1 {
-  top: 30%; 
-  left: 61%; 
+  top: 30vh; 
+  left: 132vh; 
 
 }
 
 .option2 {
-  top: 40%; 
-  left: 61%; 
+  top: 40vh; 
+  left: 132vh; 
 }
 
 .option3 {
-  top: 50%; 
-  left: 61%; 
+  top: 50vh; 
+  left: 132vh; 
 }
 
 .option1:active, .option2:active, .option3:active {
