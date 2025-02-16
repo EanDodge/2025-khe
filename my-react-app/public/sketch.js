@@ -1,16 +1,10 @@
 // saxophone prototype visualization
 // help me god
-<<<<<<< HEAD:my-react-app/public/sketch.js
-console.log("sketch.js is loaded!");
-// needs 8 keys 
-let B, Bb, A, Ab, G, Gb, F, E, Eb, D, Db, C;
-=======
 // deprecated
 
 // needs 8 keys
 let B 
 let Bb, A, Ab, G, Gb, F, E, Eb, D, Db, C;
->>>>>>> 374af17c32bd533bb0e22f0c15cef2d67606711b:backend/saxophoneController/sketch.js
 let notePlayed = "";
 
 
