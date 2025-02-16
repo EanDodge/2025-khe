@@ -7,7 +7,10 @@
 body {
     font-family: Arial, sans-serif;
 }
-
+.tut-title{
+    color: silver;
+    
+}
 .navbar {
     position: absolute;
     left: 0vh;
@@ -16,7 +19,7 @@ body {
     justify-content: space-around;
     align-items: center;
     min-height: 8vh;
-    background-color: #297373;
+    background-color: rgb(211, 133, 15);
     color: white;
     width: 140vh;
 }

@@ -33,7 +33,7 @@
 
 
 .title {
-  top:10vh;
+  top:14vh;
   left:74vh;
   position: absolute;
   width: 500px;
@@ -72,12 +72,12 @@
 .option1, .option2, .option3 {
   position: absolute;
   /* background-color:#297373 ; */
-  background-color:silver ;
+  background-color:rgb(24, 69, 195) ;
   color: white;
   padding: 10px 20px;
   text-align: center;
   display: block;
-  font-size: 16px;
+  font-size: 24px;
   cursor: pointer;
   transition: background-color 0.3s ease;
   width: 20%;
@@ -104,4 +104,5 @@
 }
 .option1:hover, .option2:hover, .option3:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
+  left: 140vh
 }

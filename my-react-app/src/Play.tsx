@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import Sketch from 'react-p5';
 import p5Types from 'p5';
 import 'p5/lib/addons/p5.sound';
-import './Play.css';
+import './Tutorial.css';
 import NavBar from './NavBar';
 
 type NoteKeys = 'B' | 'Bb' | 'A' | 'Ab' | 'G' | 'Gb' | 'F' | 'E' | 'Eb' | 'D' | 'Db' | 'C';
@@ -38,13 +38,27 @@ function Play() {
     p5.background(220);
     p5.text(currentNote || '', 300, 200);
 
+    // Define positions for each key code (mapping key codes to positions)
+    const keyPositions: { [key: number]: { x: number, y: number } } = {
+      222: { x: 40, y: 40 },   // for key `"`
+      186: { x: 40, y: 82 },   // for key `;`
+      76:  { x: 40, y: 122 },   // for key `L`
+      188: { x: 20, y: 162 },  // for key `,`
+      56:  { x: 20, y: 202 },   // for key `8`
+      85:  { x: 40, y: 242 },    // for key `U`
+      89:  { x: 40, y: 282 },    // for key `Y`
+      84:  { x: 40, y: 322 },   // for key `T`
+      52:  { x: 20, y: 362 },   // for key `4`
+    };
+
     // Visualize pressed keys
-    pressedKeys.current.forEach(key => {
-      const x = (key % 3) * 40 + 40;
-      const y = Math.floor(key / 3) * 40 + 20;
-      p5.circle(x, y, 40);
+    pressedKeys.current.forEach(keyCode => {
+      const pos = keyPositions[keyCode];
+      if (pos) {
+        p5.circle(pos.x, pos.y, 40);  // draw circle for each pressed key
+      }
     });
-  };
+};
 
   const determineNote = (p5: p5Types): NoteKeys | null => {
     const keyIsDown = (key: number) => pressedKeys.current.has(key);
