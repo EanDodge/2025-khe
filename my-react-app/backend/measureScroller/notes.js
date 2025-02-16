@@ -103,8 +103,6 @@ let testMeasure1, testMeasure2, testMeasure3, testMeasure4;
 let testNote1, testNote2, testNote3, testNote4, testNote5;
 
 function setup() {
-  createCanvas();
-
   testNote1 = new Note("B", "q");
   testNote2 = new Note("A", "q");
   testNote3 = new Note("G", "h");
@@ -148,9 +146,18 @@ function setup() {
   testSong.addMeasure(testMeasure2);
   testSong.addMeasure(testMeasure3);
   testSong.addMeasure(testMeasure4);
+
+  // creates canvas size based on however many measures there are
+  createCanvas(400 * len(testSong.measures), 400); 
 }
 
 function draw() {
   // draw song
   // ...somehow
+  background(220);
+
+  // draw staff
+  for (let i = 0; i < 5; i++) {
+    line(50, 50 + i * 30, width - 50, 50 + i * 30);
+  }
 }
