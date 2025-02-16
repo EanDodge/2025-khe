@@ -1,9 +1,19 @@
 // saxophone prototype visualization
 // help me god
+<<<<<<< HEAD:my-react-app/public/sketch.js
 console.log("sketch.js is loaded!");
 // needs 8 keys 
 let B, Bb, A, Ab, G, Gb, F, E, Eb, D, Db, C;
+=======
+// deprecated
+
+// needs 8 keys
+let B 
+let Bb, A, Ab, G, Gb, F, E, Eb, D, Db, C;
+>>>>>>> 374af17c32bd533bb0e22f0c15cef2d67606711b:backend/saxophoneController/sketch.js
 let notePlayed = "";
+
+
 
 function preload() {
   if (typeof p5 !== "undefined") {
@@ -28,47 +38,50 @@ function setup() {
   console.log("p5.js setup() is running!");
   createCanvas(600, 400);
   textSize(50);
-  // figure this out later
-  B.playMode('sustain');
 }
 
 function draw() {
   background(220);
+  
+  //let sax;
+  //sax = new Saxophone();
+  //sax.play();
+  
   // 1
   if (keyIsDown(222)) {
-    circle(40, 20, 40);
+    circle(40, 40, 40);
   }
   // 2 
   if (keyIsDown(186)) {
-    circle(40, 60, 40);
+    circle(40, 80, 40);
   }
   // 3
   if (keyIsDown(76)) {
-    circle(40, 100, 40);
+    circle(40, 120, 40);
   }
   // 4
   if (keyIsDown(188)) {
-    circle(80, 140, 40);
+    circle(80, 160, 40);
   } 
   // 5
   if (keyIsDown(55)) {
-    circle(20, 180, 40);
+    circle(20, 200, 40);
   }
   // 6
   if (keyIsDown(78)) {
-    circle(40, 220, 40);
+    circle(40, 240, 40);
   }
   // 7
   if (keyIsDown(66)) {
-    circle(40, 260, 40);
+    circle(40, 280, 40);
   }
   // 8
   if (keyIsDown(86)) {
-    circle(40, 300, 40);
+    circle(40, 320, 40);
   }
   // roller key
   if (keyIsDown(68)) {
-    circle(40, 340, 40);
+    circle(40, 360, 40);
   }
   
   checkNotes();
