@@ -55,18 +55,17 @@ function Tutorial({ keyBindings }: TutorialProps) { /*React.FC<TutorialProps> = 
   const draw = (p5: p5Types) => {
     p5.background(220);
     p5.text(currentNote || '', 300, 200);
-
     // Key positions with explicit type
     const keyPositions: KeyPositions = {
-      222: { x: 40, y: 40 },   // for key `"`
-      186: { x: 40, y: 82 },   // for key `;`
-      76:  { x: 40, y: 122 },   // for key `L`
-      188: { x: 20, y: 162 },  // for key `,`
-      56:  { x: 20, y: 202 },   // for key `8`
-      85:  { x: 40, y: 242 },    // for key `U`
-      89:  { x: 40, y: 282 },    // for key `Y`
-      84:  { x: 40, y: 322 },   // for key `T`
-      52:  { x: 20, y: 362 },   // for key `4`
+      [keyBindings[0]]: { x: 40, y: 40 },   // for key `"`
+      [keyBindings[1]]: { x: 40, y: 82 },   // for key `;`
+      [keyBindings[2]]:  { x: 40, y: 122 },   // for key `L`
+      [keyBindings[3]]: { x: 20, y: 162 },  // for key `,`
+      [keyBindings[4]]:  { x: 20, y: 202 },   // for key `8`
+      [keyBindings[5]]:  { x: 40, y: 242 },    // for key `U`
+      [keyBindings[6]]:  { x: 40, y: 282 },    // for key `Y`
+      [keyBindings[7]]:  { x: 40, y: 322 },   // for key `T`
+      [keyBindings[8]]:  { x: 20, y: 362 },   // for key `4`
     };
 
     // Visualize pressed keys
