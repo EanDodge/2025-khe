@@ -38,16 +38,18 @@
   position: absolute;
   width: 500px;
   height: 500px;
-  background-color: #8f6b00;
+  /* background-color: rgb(211, 133, 15); */
+  background-color: rgb(211, 133, 15);
   border-radius: 50%;
-  border: 15px solid white;
+  border: 15px solid silver;
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
-  color: white;
+  color: silver;
   font-size: 5rem;
   z-index: 2;
+  filter: drop-shadow(0 0 2em rgb(211, 133, 15));
 
 }
 
@@ -69,7 +71,8 @@
 
 .option1, .option2, .option3 {
   position: absolute;
-  background-color:#297373 ;
+  /* background-color:#297373 ; */
+  background-color:silver ;
   color: white;
   padding: 10px 20px;
   text-align: center;

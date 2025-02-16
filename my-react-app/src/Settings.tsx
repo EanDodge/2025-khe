@@ -1,36 +1,60 @@
-import { useState } from 'react'
-import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
-import saxLogo from './assets/saximage2.webp'
-//import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from 'react';
+import './Settings.css';
+import NavBar from './NavBar';
 
-function Settings() {
-  const [count, setCount] = useState(0)
-  const navigate = useNavigate();
+// Special mapping for better display
+const keyDisplayMap: Record<string, string> = {
+  "Quote": "'",
+  "Semicolon": ";",
+  "Comma": ",",
+  "Period": ".",
+  "Slash": "/",
+  "Backslash": "\\",
+  "BracketLeft": "[",
+  "BracketRight": "]",
+  "Minus": "-",
+  "Equal": "="
+};
+
+const defaultKeyBindings: Record<string, string> = {
+  B: "Quote",A: "Semicolon", G: "KeyL", Ab: "Comma",Bb: "Digit8",  
+  Gb: "KeyY", F: "KeyU", E: "KeyT", 
+  D: "KeyD",Eb: "Digit4",  Db: "KeyV", C: "KeyC"
+};
+
+const Settings = ({ onSave }: { onSave: (bindings: Record<string, string>) => void }) => {
+  const [keyBindings, setKeyBindings] = useState(defaultKeyBindings);
+  const [editing, setEditing] = useState<string | null>(null);
+
+  const handleClick = (note: string) => {
+    setEditing(note);
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (editing) {
+      setKeyBindings({ ...keyBindings, [editing]: event.code });
+      setEditing(null);
+    }
+  };
+
   return (
-    <>
-    {/* <Route path="/tutorial" element={<tutorial />} />   */}
-    <div className = "body" style={{ backgroundColor: 'blue'}}>
-      <div className = "logo">
-        <img src={saxLogo} alt="Saxaphone" />
+    <div className="settings-container" onKeyDown={handleKeyDown} tabIndex={0}>
+      <NavBar />
+      <h2 className = "set-title">Customize Key Bindings</h2>
+      <div className="keys-grid">
+        {Object.entries(keyBindings).map(([note, key]) => (
+          <div 
+            key={note} 
+            className="key-circle" 
+            onClick={() => handleClick(note)}
+          >
+            {editing === note ? "Press a key..." : `${note}: ${keyDisplayMap[key] || key}`}
+          </div>
+        ))}
       </div>
-      <button className="option1" onClick={() => navigate('/Tutorial')}>
-          Play!
-        </button>
-        <button className="option2" onClick={() => setCount((count) => count + 2)}>
-          Tutorial
-        </button>
-        <button className="option3" onClick={() => setCount((count) => count + 1)}>
-          Settings
-        </button>
-
-      <h1 className = "title">Haxophone</h1>
-
-        
-        
+      <button onClick={() => onSave(keyBindings)}>Save</button>
     </div>
-    </>
-  )
-}
+  );
+};
 
-export default Settings
+export default Settings;
