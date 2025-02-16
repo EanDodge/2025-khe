@@ -29,7 +29,7 @@ function Tutorial({ keyBindings }: TutorialProps) { /*React.FC<TutorialProps> = 
     F: null, E: null, Eb: null, D: null, Db: null, C: null
   });
 
-  const [currentNote, setCurrentNote] = useState<NoteKeys | null>(null);
+  const currentNote = useRef<NoteKeys | null>(null);
   const pressedKeys = useRef(new Set<number>());
 
   // Preload function for sounds
@@ -55,7 +55,7 @@ function Tutorial({ keyBindings }: TutorialProps) { /*React.FC<TutorialProps> = 
   // Drawing function for canvas
   const draw = (p5: p5Types) => {
     p5.background(220);
-    p5.text(currentNote || '', 300, 200);
+    p5.text(currentNote.current || '', 300, 200);
     // Key positions with explicit type
     const keyPositions: KeyPositions = {
       [keyBindings[0]]: { x: 40, y: 40 },   // for key `"`
@@ -163,8 +163,8 @@ console.log(keyBindings[0]);
     const key = p5.keyCode;
     pressedKeys.current.add(key);
     const newNote = determineNote(p5);
-    if (newNote !== currentNote) {
-      setCurrentNote(newNote);
+    if (newNote !== currentNote.current) {
+      currentNote.current = newNote;
       playNote(newNote);
     }
   };
@@ -174,8 +174,8 @@ console.log(keyBindings[0]);
     const key = p5.keyCode;
     pressedKeys.current.delete(key);
     const newNote = determineNote(p5);
-    if (newNote !== currentNote) {
-      setCurrentNote(newNote);
+    if (newNote !== currentNote.current) {
+      currentNote.current = newNote;
       playNote(newNote);
     }
   };
