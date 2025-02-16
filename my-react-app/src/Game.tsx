@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import dynamic from "next/dynamic";
 import p5Types from "p5";
+
 
 // Lazy-load react-p5 (avoids SSR issues)
 const Sketch = dynamic(() => import("react-p5"), { ssr: false });
@@ -175,7 +176,10 @@ const Game: React.FC = () => {
         });
     };
 
-    return <Sketch setup={setup} draw={draw} />;
+    const memoizedSketch = useMemo(() => {
+        return <Sketch setup={setup} draw={draw} />;
+      }, [setup, draw]);
+      return memoizedSketch;
 };
 
 export default Game;

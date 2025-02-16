@@ -2,6 +2,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Home from './Home';  
 import Play from './Play'; 
+import 'p5/lib/addons/p5.sound';
+
 import Tutorial from './Tutorial'; 
 import Settings from './Settings';
 import { defaultKeyBindings } from './key'; // Assuming this is where your default bindings are stored

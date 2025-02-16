@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-route
 import saxLogo from './assets/saximage2.webp'
 //import viteLogo from '/vite.svg'
 import './App.css'
+import 'p5/lib/addons/p5.sound';
+
 
 function Home() {
   const [count, setCount] = useState(0)

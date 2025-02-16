@@ -1,16 +1,18 @@
 import React, { useRef, useState } from 'react';
-import Sketch from 'react-p5';
+// import Sketch from 'react-p5';
 import p5Types from 'p5';
+import dynamic from "next/dynamic";
 import 'p5/lib/addons/p5.sound';
 import './Play.css';
 import NavBar from './NavBar';
 import Game from './Game'
 //import { keyBindings } from './key';
 
+const Sketch1 = dynamic(() => import("react-p5"), { ssr: false });
 
 
 // Type for musical notes
-type NoteKeys = 'B' | 'Bb' | 'A' | 'Ab' | 'G' | 'Gb' | 'F' | 'E' | 'Eb' | 'D' | 'Db' | 'C';
+type NoteKeys = 'B' | 'Bb' | 'A' | 'Ab' | 'G' | 'Gb' | 'F' | 'E' | 'Eb' | 'D' | 'Db' | 'C' | "None";
 
 // Type for notes mapping with SoundFile or null
 type Notes = { [K in NoteKeys]: p5Types.SoundFile | null };
@@ -26,10 +28,10 @@ function Tutorial({ keyBindings }: TutorialProps) { /*React.FC<TutorialProps> = 
   // Initialize notes and pressed keys
   const notes = useRef<Notes>({
     B: null, Bb: null, A: null, Ab: null, G: null, Gb: null,
-    F: null, E: null, Eb: null, D: null, Db: null, C: null
+    F: null, E: null, Eb: null, D: null, Db: null, C: null, None: null
   });
 
-  const [currentNote, setCurrentNote] = useState<NoteKeys | null>(null);
+  const currentNote= useRef<NoteKeys >("None");
   const pressedKeys = useRef(new Set<number>());
 
   // Preload function for sounds
@@ -55,7 +57,7 @@ function Tutorial({ keyBindings }: TutorialProps) { /*React.FC<TutorialProps> = 
   // Drawing function for canvas
   const draw = (p5: p5Types) => {
     p5.background(220);
-    p5.text(currentNote || '', 300, 200);
+    p5.text(currentNote.current || '', 300, 200);
     // Key positions with explicit type
     const keyPositions: KeyPositions = {
       [keyBindings[0]]: { x: 40, y: 40 },   // for key `"`
@@ -79,7 +81,7 @@ function Tutorial({ keyBindings }: TutorialProps) { /*React.FC<TutorialProps> = 
   };
 console.log(keyBindings[0]);
   // Function to determine the note based on pressed keys
-  const determineNote = (p5: p5Types): NoteKeys | null => {
+  const determineNote = (p5: p5Types): NoteKeys => {
     const keyIsDown = (key: number) => pressedKeys.current.has(key);
 
     // Check for each note based on the key bindings
@@ -143,7 +145,7 @@ console.log(keyBindings[0]);
       return 'Db';
     }
 
-    return null;
+    return "None";
 };
 
 
@@ -163,8 +165,8 @@ console.log(keyBindings[0]);
     const key = p5.keyCode;
     pressedKeys.current.add(key);
     const newNote = determineNote(p5);
-    if (newNote !== currentNote) {
-      setCurrentNote(newNote);
+    if (newNote !== "None") {
+      currentNote.current = newNote;
       playNote(newNote);
     }
   };
@@ -174,29 +176,33 @@ console.log(keyBindings[0]);
     const key = p5.keyCode;
     pressedKeys.current.delete(key);
     const newNote = determineNote(p5);
-    if (newNote !== currentNote) {
-      setCurrentNote(newNote);
+    if (newNote !== "None") {
+      currentNote.current = newNote;
       playNote(newNote);
     }
   };
 
-  return (
-    <div>
-      <NavBar />
-      <h1 className="tut-title">Haxophone</h1>
-      <div className="game-sketch-container">
-        <Game />
-        <Sketch
-          className="tutor"
-          preload={preload}
-          setup={setup}
-          draw={draw}
-          keyPressed={keyPressed}
-          keyReleased={keyReleased}
-        />
-      </div>
+  const MemoizedGame = React.memo(Game);
+const MemoizedSketch = React.memo(Sketch1);
+
+return (
+  <div>
+    <NavBar />
+    <h1 className="tut-title">Haxophone</h1>
+    <div className="game-sketch-container">
+      <Game />
+      <Sketch
+        className="tutor"
+        preload={preload}
+        setup={setup}
+        draw={draw}
+        keyPressed={keyPressed}
+        keyReleased={keyReleased}
+      />
     </div>
-  );
+  </div>
+);
+
   
 }
 

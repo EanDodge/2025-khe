@@ -1,12 +1,14 @@
 import React, { useRef, useState } from 'react';
-import Sketch from 'react-p5';
 import p5Types from 'p5';
 import 'p5/lib/addons/p5.sound';
 import './Tutorial.css';
 import NavBar from './NavBar';
+import dynamic from "next/dynamic";
+
 //import { keyBindings } from './key';
 
 
+const Sketch = dynamic(() => import("react-p5"), { ssr: false });
 
 // Type for musical notes
 type NoteKeys = 'B' | 'Bb' | 'A' | 'Ab' | 'G' | 'Gb' | 'F' | 'E' | 'Eb' | 'D' | 'Db' | 'C';
