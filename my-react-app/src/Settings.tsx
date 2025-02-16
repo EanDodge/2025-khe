@@ -1,36 +1,53 @@
-import { useState } from 'react'
-import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
-import saxLogo from './assets/saximage2.webp'
-//import viteLogo from '/vite.svg'
-import './App.css'
+// Settings.tsx
+import React, { useState } from 'react';
+import { defaultKeyBindings } from './key';  // Import default key bindings
+import './Settings.css';
+import NavBar from './NavBar';
 
-function Settings() {
-  const [count, setCount] = useState(0)
-  const navigate = useNavigate();
-  return (
-    <>
-    {/* <Route path="/tutorial" element={<tutorial />} />   */}
-    <div className = "body" style={{ backgroundColor: 'blue'}}>
-      <div className = "logo">
-        <img src={saxLogo} alt="Saxaphone" />
-      </div>
-      <button className="option1" onClick={() => navigate('/Tutorial')}>
-          Play!
-        </button>
-        <button className="option2" onClick={() => setCount((count) => count + 2)}>
-          Tutorial
-        </button>
-        <button className="option3" onClick={() => setCount((count) => count + 1)}>
-          Settings
-        </button>
-
-      <h1 className = "title">Haxophone</h1>
-
-        
-        
-    </div>
-    </>
-  )
+interface SettingsProps {
+  keyBindings: Record<number, number>;
+  onSave: (bindings: Record<number, number>) => void;
+  onReset: () => void;
 }
 
-export default Settings
+const Settings: React.FC<SettingsProps> = ({ keyBindings, onSave, onReset }) => {
+  const [editing, setEditing] = useState<number | null>(null); // To track which key is being edited
+  const [currentKeyBindings, setCurrentKeyBindings] = useState(keyBindings);
+
+  // Handle key press event to update the key binding
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (editing !== null) {
+      const newKeyBindings = { ...currentKeyBindings };
+      newKeyBindings[editing] = event.keyCode; // Update the key binding for the selected note
+      setCurrentKeyBindings(newKeyBindings);
+      setEditing(null); // Stop editing once a key is selected
+    }
+  };
+
+  // Reset to default key bindings
+  const resetToDefault = () => {
+    setCurrentKeyBindings(defaultKeyBindings);
+  };
+
+  return (
+    <div className="settings-container" onKeyDown={handleKeyDown} tabIndex={0}>
+      <NavBar />
+      <h2 className="set-title">Customize Key Bindings</h2>
+      <div className="keys-grid">
+        {Object.entries(currentKeyBindings).map(([index, key]) => (
+          <div
+            key={index}
+            className="key-circle"
+            onClick={() => setEditing(Number(index))} // Set the editing index
+          >
+            {editing === Number(index) ? "Press a key..." : `${index}: ${key}`}
+          </div>
+        ))}
+      </div>
+      <button onClick={() => onSave(currentKeyBindings)}>Save</button>
+      <button onClick={resetToDefault}>Reset to Default</button> {/* Reset button */}
+    </div>
+  );
+};
+
+export default Settings;

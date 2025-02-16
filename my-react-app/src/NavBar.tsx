@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import React, { useEffect } from 'react';
 import saxLogo1 from '../../Mockups/SaxBlackWhite.png'
-import './Play.css'
+import './Tutorial.css'
 
 function NavBar() {
   return (

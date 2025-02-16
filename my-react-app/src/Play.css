@@ -1,62 +1,17 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: Arial, sans-serif;
-}
-
-.navbar {
-    position: absolute;
-    left: 0vh;
-    top: -0vh;
+.game-sketch-container {
+    left:-5vh;
     display: flex;
-    justify-content: space-around;
-    align-items: center;
-    min-height: 8vh;
-    background-color: #297373;
-    color: white;
-    width: 140vh;
-}
-.logo1 {
-    position: fixed;
-    top: 1.5vh; 
-    left: 0vh;
-    transform: translateY(-50%); 
-    transform: rotate(10deg);
-    width: 200px;
-    height: 300px;
+    justify-content: space-between;
+    gap: 20px;
   }
   
-  .logo1 img {
-    width: 8vh;
-    height: 8vh;
-    object-fit: contain;
+  .game-container,
+  .sketch-container {
+    flex: 1; /* Both components take equal width */
   }
-
-
-.nav-links {
-    display: flex;
-    justify-content: space-around;
-    width: 80%;
-}
-
-.nav-links li {
-    list-style: none;
-    padding-right: 0;
-}
-
-.nav-links a {
-    color: whitesmoke;
-    text-decoration: none;
-    letter-spacing: 3px;
-    font-weight: bold;
-    font-size: 14px;
-}
-
-#sketch-container {
-    width: 100%;
-    height: calc(100vh - 8vh);
-}
+  
+  .tutor {
+    width: 100%; /* Make sure the Sketch component takes the full width */
+    height: 400px; /* Adjust as needed */
+  }
+  
