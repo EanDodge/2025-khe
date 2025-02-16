@@ -39,7 +39,7 @@ function App() {
         <Route path="/" element={<Home />} />  
         <Route 
           path="/Play" 
-          element={<Play />} 
+          element={<Play keyBindings={keyBindingsState}/>} 
         /> 
         <Route 
           path="/Tutorial" 

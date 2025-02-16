@@ -2,8 +2,9 @@ import React, { useRef, useState } from 'react';
 import Sketch from 'react-p5';
 import p5Types from 'p5';
 import 'p5/lib/addons/p5.sound';
-import './Tutorial.css';
+import './Play.css';
 import NavBar from './NavBar';
+import Game from './Game'
 //import { keyBindings } from './key';
 
 
@@ -182,17 +183,21 @@ console.log(keyBindings[0]);
   return (
     <div>
       <NavBar />
-      <h1 className="tut-title">Tutorial</h1>
-      <Sketch
-        className="tutor"
-        preload={preload}
-        setup={setup}
-        draw={draw}
-        keyPressed={keyPressed}
-        keyReleased={keyReleased}
-      />
+      <h1 className="tut-title">Haxophone</h1>
+      <div className="game-sketch-container">
+        <Game />
+        <Sketch
+          className="tutor"
+          preload={preload}
+          setup={setup}
+          draw={draw}
+          keyPressed={keyPressed}
+          keyReleased={keyReleased}
+        />
+      </div>
     </div>
   );
+  
 }
 
 export default Tutorial;

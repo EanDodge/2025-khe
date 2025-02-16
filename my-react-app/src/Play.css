@@ -1,0 +1,17 @@
+.game-sketch-container {
+    left:-5vh;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  
+  .game-container,
+  .sketch-container {
+    flex: 1; /* Both components take equal width */
+  }
+  
+  .tutor {
+    width: 100%; /* Make sure the Sketch component takes the full width */
+    height: 400px; /* Adjust as needed */
+  }
+  
