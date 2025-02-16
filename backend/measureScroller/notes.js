@@ -151,6 +151,24 @@ function setup() {
   testMeasure1.addNote(new Note("G", 'e'));
   testMeasure1.addNote(new Note("Gb", 'e'));
 
+  testMeasure2.addNote(new Note("Db", 'e'));
+  testMeasure2.addNote(new Note("C", 'e'));
+  testMeasure2.addNote(new Note("B", 'e'));
+  testMeasure2.addNote(new Note("Bb", 'e'));
+  testMeasure2.addNote(new Note("A", 'e'));
+  testMeasure2.addNote(new Note("Ab", 'e'));
+  testMeasure2.addNote(new Note("G", 'e'));
+  testMeasure2.addNote(new Note("Gb", 'e'));
+
+  testMeasure3.addNote(new Note("Db", 'e'));
+  testMeasure3.addNote(new Note("C", 'e'));
+  testMeasure3.addNote(new Note("B", 'e'));
+  testMeasure3.addNote(new Note("Bb", 'e'));
+  testMeasure3.addNote(new Note("A", 'e'));
+  testMeasure3.addNote(new Note("Ab", 'e'));
+  testMeasure3.addNote(new Note("G", 'e'));
+  testMeasure3.addNote(new Note("Gb", 'e'));
+
   /*
   testMeasure2.addNote(testNote1);
   testMeasure2.addNote(testNote2);
