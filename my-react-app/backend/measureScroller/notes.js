@@ -10,18 +10,18 @@ const noteValues = {
 
 // integers associated with pitches to determine where to draw on lines
 const pitchValues = {
-  "Db": 11,
-  "C": 10,
-  "B": 9,
-  "Bb": 8,
-  "A": 7,
-  "Ab": 6,
-  "G": 5,
-  "Gb": 4, // or F#
-  "F": 3,
-  "E": 2,
-  "Eb": 1,
-  "D": 0
+  "Db": 0,
+  "C": 1,
+  "B": 2,
+  "Bb": 3,
+  "A": 4,
+  "Ab": 5,
+  "G": 6,
+  "Gb": 7, // or F#
+  "F": 8,
+  "E": 9,
+  "Eb": 10,
+  "D": 11
 }
 
 class Note {
@@ -88,6 +88,10 @@ class Measure {
     }
     returnString += "end";
     return returnString;
+  }
+
+  length() {
+    return this.notes.length;
   }
   
 }
@@ -163,9 +167,9 @@ function setup() {
   
   // add measures
   testSong.addMeasure(testMeasure1);
-  
-  /*
   testSong.addMeasure(testMeasure2);
+
+  /*
   testSong.addMeasure(testMeasure3);
   testSong.addMeasure(testMeasure4);
   */
@@ -188,5 +192,32 @@ function draw() {
   // draw measure lines
   for (let i = 0; i < testSong.length() + 1; ++i) {
     line(i * 300 + 50, 50, i * 300 + 50, 170);
+  }
+
+  
+  // draw j notes in i measures
+  let x = 50;
+  for (let i = 0; i < testSong.length(); ++i) {
+    for (let j = 0; j < testSong.measures[i].length(); ++j) {
+      let flat = false;
+
+      // note length is used to calculate where it is spacing wise in the measure,
+      // note pitch is used to determine which line it appears on
+      let noteLength = noteValues[testSong.measures[i].notes[j].length];
+      let notePitch = pitchValues[testSong.measures[i].notes[j].pitch];
+
+      // checks for flat
+      // if (...)
+
+      // calculates note placement
+      // z represents how many notes are in the measure
+      let z = 300 / testSong.measures[i].length();
+      let y = notePitch * 15;
+
+      circle(x, y, 30);
+      console.log("placed note #" + j);
+      console.log("placed circle at: " + (x + 50) + ", " + (y + 25));
+      x += z;                                                                                                                                                                              
+    }
   }
 }
