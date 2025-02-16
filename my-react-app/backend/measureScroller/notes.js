@@ -81,7 +81,7 @@ class Measure {
 class Song {
   constructor() {
     this.measures = [];
-    this.title = "";
+    this.title = "New Song";
     this.bpm = 120;
   }
 
@@ -90,4 +90,67 @@ class Song {
     this.title = title;
     this.bpm = bpm;
   }
+
+  addMeasure(measure) {
+    this.measures.push(measure);
+  }
+}
+
+// p5.js visualization
+
+let testSong;
+let testMeasure1, testMeasure2, testMeasure3, testMeasure4;
+let testNote1, testNote2, testNote3, testNote4, testNote5;
+
+function setup() {
+  createCanvas();
+
+  testNote1 = new Note("B", "q");
+  testNote2 = new Note("A", "q");
+  testNote3 = new Note("G", "h");
+  testNote4 = new Note("G", "e");
+  testNote5 = new Note("A", "e");
+
+  testMeasure1 = new Measure();
+  testMeasure2 = new Measure();
+  testMeasure3 = new Measure();
+  testMeasure4 = new Measure();
+
+  testSong = new Song();
+
+  // my song :)
+  // hot cross buns
+
+  // add notes
+  testMeasure1.addNote(testNote1);
+  testMeasure1.addNote(testNote2);
+  testMeasure1.addNote(testNote3);
+
+  testMeasure2.addNote(testNote1);
+  testMeasure2.addNote(testNote2);
+  testMeasure2.addNote(testNote3);
+
+  testMeasure3.addNote(testNote4);
+  testMeasure3.addNote(testNote4);
+  testMeasure3.addNote(testNote4);
+  testMeasure3.addNote(testNote4);
+  testMeasure3.addNote(testNote5);
+  testMeasure3.addNote(testNote5);
+  testMeasure3.addNote(testNote5);
+  testMeasure3.addNote(testNote5);
+
+  testMeasure4.addNote(testNote1);
+  testMeasure4.addNote(testNote2);
+  testMeasure4.addNote(testNote3);
+
+  // add measures
+  testSong.addMeasure(testMeasure1);
+  testSong.addMeasure(testMeasure2);
+  testSong.addMeasure(testMeasure3);
+  testSong.addMeasure(testMeasure4);
+}
+
+function draw() {
+  // draw song
+  // ...somehow
 }
