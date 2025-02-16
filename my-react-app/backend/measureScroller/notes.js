@@ -8,6 +8,22 @@ const noteValues = {
   "s": 0.25 // Sixteenth note = 0.25 beat
 }
 
+// integers associated with pitches to determine where to draw on lines
+const pitchValues = {
+  "Db": 11,
+  "C": 10,
+  "B": 9,
+  "Bb": 8,
+  "A": 7,
+  "Ab": 6,
+  "G": 5,
+  "Gb": 4, // or F#
+  "F": 3,
+  "E": 2,
+  "Eb": 1,
+  "D": 0
+}
+
 class Note {
   
   // pitch is a string with the note value ("Eb", "B", etc.)
@@ -21,6 +37,12 @@ class Note {
     this.pitch = pitch;
     this.length = length;
   }
+  
+  info() {
+    let returnString = "";
+    returnString = this.pitch + this.length;
+    return returnString;
+  }
 }
 
 class Measure {
@@ -28,34 +50,16 @@ class Measure {
     // maxbeats is default to 4/4
     this.notes = [];
     this.maxBeats = 4;
-    this.beatValue = 0;
-  }
-
-  constructor(timeSignature) {
-    // notes contains the note strings within the measure
-    // maxbeats contains the top number of the time signature (x/4)
-    // beatValue contains the value of all notes in the measure
-    this.notes = [];
-    this.maxBeats = timeSignature;
     this.measureValue = 0;
-  }
-
-  constructor(noteArr) {
-    this.notes = noteArr;
-    this.maxBeats = 4;
-    let sum = 0;
-    for(let i = 0; i < len(noteArr); ++i){
-      sum += noteArr[i].length;
-    }
-    this.measureValue = sum;
   }
 
   // this adds a note to the measure
   addNote(note) {
     // noteValue is used to add to this.notes and this.beatValue
     let noteValue = noteValues[note.length];
+    console.log(noteValue);
     // checks to see if it can fit, returns true if it can, while inserting
-    if (noteValue + this.measureValue < this.maxBeats) {
+    if (noteValue + this.measureValue <= this.maxBeats) {
       this.notes.push(note);
       this.measureValue += noteValue;
       return true
@@ -76,6 +80,16 @@ class Measure {
       this.measureValue -= noteValues[removed.length];
     }
   }
+  
+  debug() {
+    let returnString = "This measure contains: "
+    for (let i = 0; i < this.notes.length; i++) {
+      returnString += this.notes[i].info() + " + ";
+    }
+    returnString += "end";
+    return returnString;
+  }
+  
 }
 
 class Song {
@@ -85,14 +99,18 @@ class Song {
     this.bpm = 120;
   }
 
-  constructor(measures, title, bpm) {
-    this.measures = measures;
-    this.title = title;
-    this.bpm = bpm;
-  }
-
   addMeasure(measure) {
     this.measures.push(measure);
+  }
+  
+  length() {
+    return this.measures.length;
+  }
+  
+  debugSong() {
+    for (let i = 0; i < this.measures.length; i++) {
+      console.log("measure #" + i + ": " + this.measures[i].debug());
+    }
   }
 }
 
@@ -124,6 +142,7 @@ function setup() {
   testMeasure1.addNote(testNote2);
   testMeasure1.addNote(testNote3);
 
+  /*
   testMeasure2.addNote(testNote1);
   testMeasure2.addNote(testNote2);
   testMeasure2.addNote(testNote3);
@@ -140,15 +159,20 @@ function setup() {
   testMeasure4.addNote(testNote1);
   testMeasure4.addNote(testNote2);
   testMeasure4.addNote(testNote3);
-
+  */
+  
   // add measures
   testSong.addMeasure(testMeasure1);
+  
+  /*
   testSong.addMeasure(testMeasure2);
   testSong.addMeasure(testMeasure3);
   testSong.addMeasure(testMeasure4);
+  */
 
   // creates canvas size based on however many measures there are
-  createCanvas(400 * len(testSong.measures), 400); 
+  createCanvas(400 * testSong.length(), 400); 
+  testSong.debugSong();
 }
 
 function draw() {
@@ -159,5 +183,10 @@ function draw() {
   // draw staff
   for (let i = 0; i < 5; i++) {
     line(50, 50 + i * 30, width - 50, 50 + i * 30);
+  }
+  
+  // draw measure lines
+  for (let i = 0; i < testSong.length() + 1; ++i) {
+    line(i * 300 + 50, 50, i * 300 + 50, 170);
   }
 }
