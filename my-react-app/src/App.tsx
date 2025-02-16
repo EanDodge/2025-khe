@@ -6,21 +6,14 @@ import Tutorial from './Tutorial';
 import Settings from './Settings';
 
 // Default key bindings
-const defaultKeyBindings: Record<string, number> = {
-  Eb: 222, // Key code for Eb
-  D: 186,  // Key code for D
-  G: 76,   // Key code for G
-  F: 188,  // Key code for F
-  A: 85,   // Key code for A
-  B: 89,   // Key code for B
-  C: 84,   // Key code for C
-  Bb: 52,  // Key code for Bb
-  Gb: 56,  // Key code for Gb
-  Ab: 65,  // Key code for Ab
+const defaultKeyBindings: Record<string, string> = {
+  B: "Quote", A: "Semicolon", G: "KeyL", Ab: "Comma", Bb: "Digit8",
+  Gb: "KeyY", F: "KeyU", E: "KeyT",
+  D: "KeyD", Eb: "Digit4", Db: "KeyV", C: "KeyC"
 };
 
 function App() {
-  const [keyBindings, setKeyBindings] = useState<Record<string, number>>(defaultKeyBindings);
+  const [keyBindings, setKeyBindings] = useState<Record<string, string>>(defaultKeyBindings);
 
   // Load key bindings from localStorage on initial render (only if not already set)
   useEffect(() => {
@@ -31,7 +24,7 @@ function App() {
   }, []);
 
   // Save key bindings to localStorage whenever they change
-  const handleSaveKeyBindings = (newKeyBindings: Record<string, number>) => {
+  const handleSaveKeyBindings = (newKeyBindings: Record<string, string>) => {
     setKeyBindings(newKeyBindings);
     localStorage.setItem('keyBindings', JSON.stringify(newKeyBindings));
   };
@@ -46,16 +39,9 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />  
-        <Route path="/Play" element={<Play /*keyBindings={keyBindings} *//>} /> 
-        <Route path="/Tutorial" element={<Tutorial />} />  
-        <Route 
-          path="/Settings" 
-          element={<Settings 
-                    keyBindings={keyBindings} 
-                    onSave={handleSaveKeyBindings} 
-                    onReset={handleResetKeyBindings} 
-                  />} 
-        />   
+        <Route path="/Play" element={<Play /*keyBindings={keyBindings}*/ />} /> 
+        <Route path="/Tutorial" element={<Tutorial /*keyBindings={keyBindings}*/ />} />  
+        <Route path="/Settings" element={<Settings keyBindings={keyBindings} onSave={handleSaveKeyBindings} onReset={handleResetKeyBindings} />} />   
       </Routes>
     </Router>
   );

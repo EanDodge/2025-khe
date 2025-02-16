@@ -16,14 +16,13 @@ const keyDisplayMap: Record<string, string> = {
   "Equal": "="
 };
 
-const defaultKeyBindings: Record<string, string> = {
-  B: "Quote", Bb: "Digit8", A: "Semicolon", Ab: "Comma",
-  G: "KeyL", Gb: "KeyY", F: "KeyU", E: "KeyT",
-  Eb: "Digit4", D: "KeyD", Db: "KeyV", C: "KeyC"
-};
+interface SettingsProps {
+  keyBindings: Record<string, string>;
+  onSave: (bindings: Record<string, string>) => void;
+  onReset: () => void;
+}
 
-const Settings = ({ onSave }: { onSave: (bindings: Record<string, string>) => void }) => {
-  const [keyBindings, setKeyBindings] = useState(defaultKeyBindings);
+const Settings: React.FC<SettingsProps> = ({ keyBindings, onSave, onReset }) => {
   const [editing, setEditing] = useState<string | null>(null);
 
   const handleClick = (note: string) => {
@@ -32,7 +31,7 @@ const Settings = ({ onSave }: { onSave: (bindings: Record<string, string>) => vo
 
   const handleKeyDown = (event: React.KeyboardEvent) => {
     if (editing) {
-      setKeyBindings({ ...keyBindings, [editing]: event.code });
+      onSave({ ...keyBindings, [editing]: event.code });
       setEditing(null);
     }
   };
@@ -40,7 +39,7 @@ const Settings = ({ onSave }: { onSave: (bindings: Record<string, string>) => vo
   return (
     <div className="settings-container" onKeyDown={handleKeyDown} tabIndex={0}>
       <NavBar />
-      <h2>Customize Key Bindings</h2>
+      <h2 className="set-title">Customize Key Bindings</h2>
       <div className="keys-grid">
         {Object.entries(keyBindings).map(([note, key]) => (
           <div
@@ -48,13 +47,12 @@ const Settings = ({ onSave }: { onSave: (bindings: Record<string, string>) => vo
             className="key-circle"
             onClick={() => handleClick(note)}
           >
-            {editing === note
-              ? `Press a key...`
-              : `${note}: ${keyDisplayMap[key] || key}`}
+            {editing === note ? "Press a key..." : `${note}: ${keyDisplayMap[key] || key}`}
           </div>
         ))}
       </div>
       <button onClick={() => onSave(keyBindings)}>Save</button>
+      <button onClick={onReset}>Reset to Default</button> {/* Reset button */}
     </div>
   );
 };
