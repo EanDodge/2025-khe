@@ -181,10 +181,10 @@ function setup() {
 
   // add notes
   testMeasure1.addNote(new Note("B", 'q'));
-  testMeasure1.addNote(new Note("Ab", 'q'));
+  testMeasure1.addNote(new Note("A", 'q'));
   testMeasure1.addNote(new Note("G", 'h'));
 
-  testMeasure2.addNote(new Note("Bb", 'q'));
+  testMeasure2.addNote(new Note("B", 'q'));
   testMeasure2.addNote(new Note("A", 'q'));
   testMeasure2.addNote(new Note("G", 'h'));
 
@@ -199,7 +199,8 @@ function setup() {
 
   testMeasure4.addNote(new Note("B", 'q'));
   testMeasure4.addNote(new Note("A", 'q'));
-  testMeasure4.addNote(new Note("G", 'h'));
+  testMeasure4.addNote(new Note("G", 'q'));
+  testMeasure4.addNote(new Note("R", 'q'));
 
   // add measures
   testSong.addMeasure(testMeasure1);
@@ -219,8 +220,6 @@ function setup() {
 
 // just for the game, i will always have this as true
 // i FOR THE LIFE OF ME could not implement the scrolling functionality in draw. this was HORRIBLE.
-
-// last thing i need to do, create flat and sharp images
 let autoScroll = true;
 
 function draw() {
