@@ -20,9 +20,9 @@ body {
     color: white;
     width: 140vh;
 }
-.logo {
+.logo1 {
     position: fixed;
-    top: -2.5vh; 
+    top: 1.5vh; 
     left: 0vh;
     transform: translateY(-50%); 
     transform: rotate(10deg);
@@ -30,7 +30,7 @@ body {
     height: 300px;
   }
   
-  .logo img {
+  .logo1 img {
     width: 8vh;
     height: 8vh;
     object-fit: contain;
