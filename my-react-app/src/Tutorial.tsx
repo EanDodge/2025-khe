@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import  { useRef, useState } from 'react';
 import Sketch from 'react-p5';
 import p5Types from 'p5';
 import 'p5/lib/addons/p5.sound';
