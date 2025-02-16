@@ -10,6 +10,7 @@ const noteValues = {
 
 // integers associated with pitches to determine where to draw on lines
 const pitchValues = {
+  "R": -1, // rest
   "Db": 0.5,
   "C": 1.0,
   "B": 2.0,
@@ -36,11 +37,17 @@ class Note {
   constructor(pitch, length) {
     this.pitch = pitch;
     this.length = length;
+    this.isRest = false;
   }
   
   info() {
     let returnString = "";
-    returnString = this.pitch + this.length;
+    if (this.pitch == "R") {
+      returnString = "Rest" + this.length;
+    }
+    else {
+      returnString = this.pitch + this.length;
+    }
     return returnString;
   }
 }
@@ -152,7 +159,7 @@ function setup() {
   testMeasure1.addNote(new Note("Gb", 'e'));
 
   testMeasure2.addNote(new Note("Db", 'e'));
-  testMeasure2.addNote(new Note("C", 'e'));
+  testMeasure2.addNote(new Note("R", 'e'));
   testMeasure2.addNote(new Note("B", 'e'));
   testMeasure2.addNote(new Note("Bb", 'e'));
   testMeasure2.addNote(new Note("A", 'e'));
@@ -161,7 +168,7 @@ function setup() {
   testMeasure2.addNote(new Note("Gb", 'e'));
 
   testMeasure3.addNote(new Note("Db", 'e'));
-  testMeasure3.addNote(new Note("C", 'e'));
+  testMeasure3.addNote(new Note("R", 'e'));
   testMeasure3.addNote(new Note("B", 'e'));
   testMeasure3.addNote(new Note("Bb", 'e'));
   testMeasure3.addNote(new Note("A", 'e'));
@@ -222,6 +229,7 @@ function draw() {
     for (let j = 0; j < testSong.measures[i].length(); ++j) {
       let flat = false;
       let sharp = false;
+      let rest = false;
 
       // note length is used to calculate where it is spacing wise in the measure,
       // note pitch is used to determine which line it appears on
@@ -231,6 +239,10 @@ function draw() {
       // checks for flat/sharp
       // changes position to the natural counterpart
       switch(notePitch) {
+        case -1:
+          rest = true;
+          notePitch = 2;
+          break;
         case 0.5: // Db or C#
           sharp = true;
           flat = false;
@@ -275,6 +287,10 @@ function draw() {
       }
       else if (sharp) {
         fill(0, 0, 255);
+        circle(x, y, 30);
+      }
+      else if (rest) {
+        fill(0);
         circle(x, y, 30);
       }
       else {
