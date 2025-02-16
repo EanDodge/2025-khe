@@ -44,7 +44,7 @@ class Measure {
     this.notes = noteArr;
     this.maxBeats = 4;
     let sum = 0;
-    for (let i = 0; i < noteArr.len(); ++i) {
+    for(let i = 0; i < len(noteArr); ++i){
       sum += noteArr[i].length;
     }
     this.measureValue = sum;
