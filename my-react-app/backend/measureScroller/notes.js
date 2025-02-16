@@ -135,37 +135,37 @@ class Receptor {
   }
 
   display() {
+    stroke(0, 0, 255);
     line(100, 30, 100, 190);
   }
-
-
 }
 
-
-
-
 // p5.js visualization
+let wholeNote;
+let openNote;
+let closedNote;
+
+function preload() {
+  wholeNote = loadImage('noteWhole.png');
+  openNote = loadImage('noteOpen.png');
+  closedNote = loadImage('noteClosed.png');
+  flatSign = loadImage('flat.png');
+  sharpSign = loadImage('sharp.png');
+}
+
+let scrollX = 0;
+let scrollSpeed;
+let measureWidth = 300;
+let canvasWidth;
+let receptor;
 
 let testSong;
 let testMeasure1, testMeasure2, testMeasure3, testMeasure4;
 
-// TODO
-//  Implement scrollSpeed in Song and draw
-//  Implement a receptor line
-//  Implement noteLength
-//
-//
-
-function preload() {
-  
-}
-
-let scrollX = 0;
-let scrollSpeed = 5;
-let measureWidth = 300;
-let canvasWidth;
-
 function setup() {
+
+  // init receptor
+  receptor = new Receptor();
 
   // initialize measures
   testMeasure1 = new Measure();
@@ -173,18 +173,18 @@ function setup() {
   testMeasure3 = new Measure();
   testMeasure4 = new Measure();
 
-  // initialize song
-  testSong = new Song("Hot Cross Buns", 60);
+  // initialize song with title and bpm ( 4/4 time signature always )
+  testSong = new Song("Hot Cross Buns", 120);
 
   // my song :)
   // hot cross buns
 
   // add notes
   testMeasure1.addNote(new Note("B", 'q'));
-  testMeasure1.addNote(new Note("A", 'q'));
+  testMeasure1.addNote(new Note("Ab", 'q'));
   testMeasure1.addNote(new Note("G", 'h'));
 
-  testMeasure2.addNote(new Note("B", 'q'));
+  testMeasure2.addNote(new Note("Bb", 'q'));
   testMeasure2.addNote(new Note("A", 'q'));
   testMeasure2.addNote(new Note("G", 'h'));
 
@@ -209,113 +209,184 @@ function setup() {
 
   // Fixed canvas width to allow for scrolling across the screen
   canvasWidth = 800;
-  createCanvas(canvasWidth, 400);
+  createCanvas(canvasWidth, 220);
   scrollX = testSong.length() * measureWidth; // Start off-screen
+  imageMode(CENTER);
+
+  // bps * default scroll speed / 4
+  scrollSpeed = (testSong.bpm / 60) * 5 / 4;
 }
 
 // just for the game, i will always have this as true
-// i couldn't find a workaround to pause in debugging, but i don't even know if it works
-// so i opted to have the scroll stop once it was out of the measure bounds.
+// i FOR THE LIFE OF ME could not implement the scrolling functionality in draw. this was HORRIBLE.
+
+// last thing i need to do, create flat and sharp images
 let autoScroll = true;
 
 function draw() {
   background(220);
+  receptor.display();
+  stroke(0, 0, 0);
 
-  // if we have autoscroll enabled,
-  // the scrollX is constantly being moved by the scrollSpeed
+  // Scroll the song to the left over time
   if (autoScroll) {
     scrollX -= scrollSpeed;
 
-    // checks to see if we have completely scrolled through the song
-    if (scrollX < -testSong.length() * measureWidth) {
+    if (scrollX < -testSong.length * measureWidth) {
       autoScroll = false;
-      scrollX = -testSong.length() * measureWidth;
+      scrollX = -testSong.length * measureWidth;
     }
   }
 
-  // Draw staff lines
+  // Draw the staff lines
   for (let i = 0; i < 5; i++) {
     line(50, 50 + i * 30, canvasWidth - 50, 50 + i * 30);
   }
 
-  // currentX is used
-  let currentX = 50 + scrollX;
+  let currentX = 50 + scrollX; // Adjust for scrolling
 
   for (let i = 0; i < testSong.length(); i++) {
-    // Measure lines
+    let measure = testSong.measures[i];
+
+    // Draw measure lines
     line(currentX, 50, currentX, 170);
 
-    for (let j = 0; j < testSong.measures[i].length(); j++) {
-      let note = testSong.measures[i].notes[j];
-      let z = measureWidth / testSong.measures[i].length();
-      let y;
+    let measureStartX = currentX;
+    let currentBeatPosition = 0;
 
-      // Handles whether or not the note is a rest. Places a separate rest icon
+    for (let j = 0; j < measure.notes.length; j++) {
+      let note = measure.notes[j];
+      let noteDuration = noteValues[note.length];
+      let noteWidth = (noteDuration / 4) * measureWidth;
+      let xPos = measureStartX + (currentBeatPosition / 4) * measureWidth;
+      let yPos;
+
       if (note.pitch === "R") {
-        y = 100;
+        // Rest positioning
+        yPos = 110;
         fill(0);
-        rect(currentX + j * z + z / 4, y - 5, z / 2, 10);
-        console.log("placed rest #" + j);
-      }
-      else {
-        let flat = false;
-        let sharp = false;
+        rect(xPos + noteWidth / 4, yPos - 5, noteWidth / 2, 10);
+      } else {
+        // Get vertical positioning for notes
         let notePitch = pitchValues[note.pitch];
+        let flat = false, sharp = false;
 
         switch (notePitch) {
-          case 0.5: // Db or C#
-            sharp = true;
-            flat = false;
-            notePitch = 1;
-            break;
-          case 2.5: // Bb
-            sharp = false;
-            flat = true;
-            notePitch = 2;
-            break;
-          case 3.5: // Ab or G#
-            sharp = true;
-            flat = false;
-            notePitch = 4;
-            break;
-          case 4.5: // Gb or F#
-            sharp = true;
-            flat = false;
-            notePitch = 5;
-            break;
-          case 6.5: // Eb
-            sharp = false;
-            flat = true;
-            notePitch = 6;
-            break;
-          default: // anything else
-            sharp = false;
-            flat = false;
+          case 0.5: sharp = true; notePitch = 1; break;
+          case 2.5: flat = true; notePitch = 2; break;
+          case 3.5: sharp = true; notePitch = 4; break;
+          case 4.5: sharp = true; notePitch = 5; break;
+          case 6.5: flat = true; notePitch = 6; break;
         }
-        // get note position on staff
-        y = 15 * notePitch + 80;
 
-        // handles note placement
-        // if flat, red
-        // if sharp, blue
-        // if natural, white
-        if (flat) {
-          fill(255, 0, 0);
-          circle(currentX + j * z + z / 2, y, 30);
+        yPos = 15 * notePitch + 80; // Convert pitch to y-position
+
+        // Draw note image
+        let noteImage;
+        let accidentalImage;
+        switch (note.length) {
+          case "w":
+            noteImage = wholeNote; 
+            if (flat) {
+              accidentalImage = flatSign;
+            }
+            else if (sharp) {
+              accidentalImage = sharpSign;
+            }
+            break;
+          case "h":
+            noteImage = openNote; 
+            if (flat) {
+              accidentalImage = flatSign;
+            }
+            else if (sharp) {
+              accidentalImage = sharpSign;
+            }
+            break;
+          case "q":
+            noteImage = closedNote; 
+            if (flat) {
+              accidentalImage = flatSign;
+            }
+            else if (sharp) {
+              accidentalImage = sharpSign;
+            }
+            break;
+          case "e":
+            noteImage = closedNote; 
+            if (flat) {
+              accidentalImage = flatSign;
+            }
+            else if (sharp) {
+              accidentalImage = sharpSign;
+            }
+            break;
+          case "s":
+            noteImage = closedNote; 
+            if (flat) {
+              accidentalImage = flatSign;
+            }
+            else if (sharp) {
+              accidentalImage = sharpSign;
+            }
+            break;
         }
-        else if (sharp) {
-          fill(0, 0, 255);
-          circle(currentX + j * z + z / 2, y, 30);
+        image(noteImage, xPos + noteWidth / 2, yPos);
+        if (accidentalImage) {
+          image(accidentalImage, 15 + xPos + noteWidth / 2, yPos - 10);
         }
-        else {
-          fill(255);
-          circle(currentX + j * z + z / 2, y, 30);
+
+        // draw stems
+        switch(note.length) {
+          case "h":
+            if (notePitch > 1) {
+              line(10 + xPos + noteWidth / 2, yPos, 10 + xPos + noteWidth / 2, yPos - 60);
+            }
+            else if (notePitch <= 1) {
+              line(-10 + xPos + noteWidth / 2, yPos, -10 + xPos + noteWidth / 2, yPos + 60)
+            }
+            break;
+          case "q":
+            if (notePitch > 1) {
+              line(10 + xPos + noteWidth / 2, yPos, 10 + xPos + noteWidth / 2, yPos - 60);
+            }
+            else if (notePitch <= 1) {
+              line(-10 + xPos + noteWidth / 2, yPos, -10 + xPos + noteWidth / 2, yPos + 60)
+            }
+            break;
+          case "e":
+            if (notePitch > 1) {
+              line(10 + xPos + noteWidth / 2, yPos, 10 + xPos + noteWidth / 2, yPos - 60);
+              line(10 + xPos + noteWidth / 2, yPos - 60, 20 + xPos + noteWidth / 2, yPos - 50);
+            }
+            else if (notePitch <= 1) {
+              line(-10 + xPos + noteWidth / 2, yPos, -10 + xPos + noteWidth / 2, yPos + 60)
+              line(-10 + xPos + noteWidth / 2, yPos + 60, -20 + xPos + noteWidth / 2, yPos + 50);
+            }
+            break;
+          case "s":
+            if (notePitch > 1) {
+              line(10 + xPos + noteWidth / 2, yPos, 10 + xPos + noteWidth / 2, yPos - 60);
+              line(10 + xPos + noteWidth / 2, yPos - 60, 20 + xPos + noteWidth / 2, yPos - 50);
+              line(10 + xPos + noteWidth / 2, yPos - 55, 20 + xPos + noteWidth / 2, yPos - 45);
+            }
+            else if (notePitch <= 1) {
+              line(-10 + xPos + noteWidth / 2, yPos, -10 + xPos + noteWidth / 2, yPos + 60)
+              line(-10 + xPos + noteWidth / 2, yPos + 60, -20 + xPos + noteWidth / 2, yPos + 50);
+              line(-10 + xPos + noteWidth / 2, yPos + 55, -20 + xPos + noteWidth / 2, yPos + 45);
+            }
+            break;
+          default:
+            // wholenotes and rests
         }
-        console.log("placed note #" + j);
-        console.log("placed circle at: " + (currentX + j * z + z / 2) + ", " + y);
       }
+      // Move to the next beat
+      currentBeatPosition += noteDuration;
     }
+    // Move to the next measure
     currentX += measureWidth;
   }
+  // Draw final measure line
   line(currentX, 50, currentX, 170);
 }
+
