@@ -39,13 +39,11 @@ class Measure {
     this.maxBeats = timeSignature;
     this.measureValue = 0;
   }
-
   constructor(noteArr) {
     this.notes = noteArr;
     this.maxBeats = 4;
     this.measureValue = 
   }
-
   // this adds a note to the measure
   addNote(note) {
     // noteValue is used to add to this.notes and this.beatValue
