@@ -4,44 +4,57 @@ import Home from './Home';
 import Play from './Play'; 
 import Tutorial from './Tutorial'; 
 import Settings from './Settings';
-
-// Default key bindings
-const defaultKeyBindings: Record<string, string> = {
-  B: "Quote", A: "Semicolon", G: "KeyL", Ab: "Comma", Bb: "Digit8",
-  Gb: "KeyY", F: "KeyU", E: "KeyT",
-  D: "KeyD", Eb: "Digit4", Db: "KeyV", C: "KeyC"
-};
+import { defaultKeyBindings } from './key'; // Assuming this is where your default bindings are stored
 
 function App() {
-  const [keyBindings, setKeyBindings] = useState<Record<string, string>>(defaultKeyBindings);
-
-  // Load key bindings from localStorage on initial render (only if not already set)
-  useEffect(() => {
+  const [keyBindingsState, setKeyBindingsState] = useState<Record<number, number>>(() => {
+    // On initial load, check if we have saved key bindings in localStorage
     const savedKeyBindings = localStorage.getItem('keyBindings');
     if (savedKeyBindings) {
-      setKeyBindings(JSON.parse(savedKeyBindings));
+      console.log('Loaded saved key bindings from localStorage:', savedKeyBindings);
+      return JSON.parse(savedKeyBindings); // Return the saved key bindings
+    } else {
+      console.log('No saved key bindings found, using default values');
+      return defaultKeyBindings; // If nothing is saved, use default bindings
     }
-  }, []);
+  });
 
   // Save key bindings to localStorage whenever they change
-  const handleSaveKeyBindings = (newKeyBindings: Record<string, string>) => {
-    setKeyBindings(newKeyBindings);
-    localStorage.setItem('keyBindings', JSON.stringify(newKeyBindings));
+  const handleSaveKeyBindings = (newKeyBindings: Record<number, number>) => {
+    console.log('Saving new key bindings:', newKeyBindings);
+    setKeyBindingsState(newKeyBindings); // Update state
+    localStorage.setItem('keyBindings', JSON.stringify(newKeyBindings)); // Save to localStorage
   };
 
   // Reset to default key bindings
   const handleResetKeyBindings = () => {
-    setKeyBindings(defaultKeyBindings);
-    localStorage.setItem('keyBindings', JSON.stringify(defaultKeyBindings));
+    console.log('Resetting to default key bindings');
+    setKeyBindingsState(defaultKeyBindings); // Reset to default
+    localStorage.setItem('keyBindings', JSON.stringify(defaultKeyBindings)); // Save default to localStorage
   };
 
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />  
-        <Route path="/Play" element={<Play /*keyBindings={keyBindings}*/ />} /> 
-        <Route path="/Tutorial" element={<Tutorial /*keyBindings={keyBindings}*/ />} />  
-        <Route path="/Settings" element={<Settings keyBindings={keyBindings} onSave={handleSaveKeyBindings} onReset={handleResetKeyBindings} />} />   
+        <Route 
+          path="/Play" 
+          element={<Play />} 
+        /> 
+        <Route 
+          path="/Tutorial" 
+          element={<Tutorial keyBindings={keyBindingsState}/>} 
+        />  
+        <Route 
+          path="/Settings" 
+          element={
+            <Settings 
+              keyBindings={keyBindingsState} 
+              onSave={handleSaveKeyBindings} 
+              onReset={handleResetKeyBindings} 
+            />
+          } 
+        />   
       </Routes>
     </Router>
   );

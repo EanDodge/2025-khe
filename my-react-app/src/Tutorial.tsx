@@ -4,6 +4,9 @@ import p5Types from 'p5';
 import 'p5/lib/addons/p5.sound';
 import './Tutorial.css';
 import NavBar from './NavBar';
+//import { keyBindings } from './key';
+
+
 
 // Type for musical notes
 type NoteKeys = 'B' | 'Bb' | 'A' | 'Ab' | 'G' | 'Gb' | 'F' | 'E' | 'Eb' | 'D' | 'Db' | 'C';
@@ -14,7 +17,11 @@ type Notes = { [K in NoteKeys]: p5Types.SoundFile | null };
 // Type for key positions mapping (keycode -> position)
 type KeyPositions = { [key: number]: { x: number, y: number } };
 
-function Tutorial() {
+interface TutorialProps {
+  keyBindings: Record<number, number>; // Accept keyBindings as a prop
+}
+
+function Tutorial({ keyBindings }: TutorialProps) { /*React.FC<TutorialProps> = ({ keyBindings }) =>*/ 
   // Initialize notes and pressed keys
   const notes = useRef<Notes>({
     B: null, Bb: null, A: null, Ab: null, G: null, Gb: null,
@@ -70,73 +77,75 @@ function Tutorial() {
       }
     });
   };
-
+console.log(keyBindings[0]);
   // Function to determine the note based on pressed keys
   const determineNote = (p5: p5Types): NoteKeys | null => {
     const keyIsDown = (key: number) => pressedKeys.current.has(key);
 
-    if (keyIsDown(222) && keyIsDown(186) && keyIsDown(76) && !keyIsDown(188) &&
-      keyIsDown(85) && keyIsDown(89) && keyIsDown(84) && keyIsDown(52) && !keyIsDown(56)) {
+    // Check for each note based on the key bindings
+    if (keyIsDown(keyBindings[0]) && keyIsDown(keyBindings[1]) && keyIsDown(keyBindings[2]) && !keyIsDown(keyBindings[3]) &&
+      keyIsDown(keyBindings[4]) && keyIsDown(keyBindings[5]) && keyIsDown(keyBindings[6]) && keyIsDown(keyBindings[7]) && !keyIsDown(keyBindings[8])) {
       return 'Eb';
     }
 
-    if (keyIsDown(222) && keyIsDown(186) && keyIsDown(76) && !keyIsDown(188) &&
-      keyIsDown(85) && keyIsDown(89) && keyIsDown(84) && !keyIsDown(52) && !keyIsDown(56)) {
+    if (keyIsDown(keyBindings[0]) && keyIsDown(keyBindings[1]) && keyIsDown(keyBindings[1]) && !keyIsDown(keyBindings[3]) &&
+      keyIsDown(keyBindings[4]) && keyIsDown(keyBindings[5]) && keyIsDown(keyBindings[6]) && !keyIsDown(keyBindings[8])) {
       return 'D';
     }
 
-    if (keyIsDown(222) && keyIsDown(186) && keyIsDown(76) && !keyIsDown(188) &&
-      keyIsDown(85) && keyIsDown(89) && !keyIsDown(84) && !keyIsDown(52) && !keyIsDown(56)) {
+    if (keyIsDown(keyBindings[0]) && keyIsDown(keyBindings[1]) && keyIsDown(keyBindings[2]) && !keyIsDown(keyBindings[3]) &&
+      keyIsDown(keyBindings[4]) && keyIsDown(keyBindings[5]) && !keyIsDown(keyBindings[6]) && !keyIsDown(keyBindings[7]) && !keyIsDown(keyBindings[8])) {
       return 'E';
     }
 
-    if (keyIsDown(222) && keyIsDown(186) && keyIsDown(76) && !keyIsDown(188) &&
-      keyIsDown(85) && !keyIsDown(89) && !keyIsDown(84) && !keyIsDown(52) && !keyIsDown(56)) {
+    if (keyIsDown(keyBindings[0]) && keyIsDown(keyBindings[1]) && keyIsDown(keyBindings[2]) && !keyIsDown(keyBindings[3]) &&
+      keyIsDown(keyBindings[4]) && !keyIsDown(keyBindings[5]) && !keyIsDown(keyBindings[6]) && !keyIsDown(keyBindings[7]) && !keyIsDown(keyBindings[8])) {
       return 'F';
     }
 
-    if (keyIsDown(222) && keyIsDown(186) && keyIsDown(76) && !keyIsDown(188) &&
-      !keyIsDown(85) && keyIsDown(89) && !keyIsDown(84) && !keyIsDown(52) && !keyIsDown(56)) {
+    if (keyIsDown(keyBindings[0]) && keyIsDown(keyBindings[1]) && keyIsDown(keyBindings[2]) && !keyIsDown(keyBindings[3]) &&
+      !keyIsDown(keyBindings[4]) && keyIsDown(keyBindings[5]) && !keyIsDown(keyBindings[6]) && !keyIsDown(keyBindings[7]) && !keyIsDown(keyBindings[8])) {
       return 'Gb';
     }
 
-    if (keyIsDown(222) && keyIsDown(186) && keyIsDown(76) && keyIsDown(188) &&
-      !keyIsDown(85) && !keyIsDown(89) && !keyIsDown(84) && !keyIsDown(52) && !keyIsDown(56)) {
+    if (keyIsDown(keyBindings[0]) && keyIsDown(keyBindings[1]) && keyIsDown(keyBindings[2]) && keyIsDown(keyBindings[3]) &&
+      !keyIsDown(keyBindings[4]) && !keyIsDown(keyBindings[5]) && !keyIsDown(keyBindings[6]) && !keyIsDown(keyBindings[7]) && !keyIsDown(keyBindings[8])) {
       return 'Ab';
     }
 
-    if (keyIsDown(222) && keyIsDown(186) && keyIsDown(76) && !keyIsDown(188) &&
-      !keyIsDown(85) && !keyIsDown(89) && !keyIsDown(84) && !keyIsDown(52) && !keyIsDown(56)) {
+    if (keyIsDown(keyBindings[0]) && keyIsDown(keyBindings[1]) && keyIsDown(keyBindings[2]) && !keyIsDown(keyBindings[3]) &&
+      !keyIsDown(keyBindings[4]) && !keyIsDown(keyBindings[5]) && !keyIsDown(keyBindings[6]) && !keyIsDown(keyBindings[7]) && !keyIsDown(keyBindings[8])) {
       return 'G';
     }
 
-    if (keyIsDown(222) && keyIsDown(186) && !keyIsDown(76) && !keyIsDown(188) &&
-      !keyIsDown(85) && !keyIsDown(89) && !keyIsDown(84) && !keyIsDown(52) && keyIsDown(56)) {
+    if (keyIsDown(keyBindings[0]) && keyIsDown(keyBindings[1]) && !keyIsDown(keyBindings[2]) && !keyIsDown(keyBindings[3]) &&
+      !keyIsDown(keyBindings[4]) && !keyIsDown(keyBindings[5]) && !keyIsDown(keyBindings[6]) && !keyIsDown(keyBindings[7]) && keyIsDown(keyBindings[8])) {
       return 'Bb';
     }
 
-    if (keyIsDown(222) && keyIsDown(186) && !keyIsDown(76) && !keyIsDown(188) &&
-      !keyIsDown(85) && !keyIsDown(89) && !keyIsDown(84) && !keyIsDown(52) && !keyIsDown(56)) {
+    if (keyIsDown(keyBindings[0]) && keyIsDown(keyBindings[1]) && !keyIsDown(keyBindings[2]) && !keyIsDown(keyBindings[3]) &&
+      !keyIsDown(keyBindings[4]) && !keyIsDown(keyBindings[5]) && !keyIsDown(keyBindings[6]) && !keyIsDown(keyBindings[7]) && !keyIsDown(keyBindings[8])) {
       return 'A';
     }
 
-    if (keyIsDown(222) && !keyIsDown(186) && !keyIsDown(76) && !keyIsDown(188) &&
-      !keyIsDown(85) && !keyIsDown(89) && !keyIsDown(84) && !keyIsDown(52) && !keyIsDown(56)) {
+    if (keyIsDown(keyBindings[0]) && !keyIsDown(keyBindings[1]) && !keyIsDown(keyBindings[2]) && !keyIsDown(keyBindings[3]) &&
+      !keyIsDown(keyBindings[4]) && !keyIsDown(keyBindings[5]) && !keyIsDown(keyBindings[6]) && !keyIsDown(keyBindings[7]) && !keyIsDown(keyBindings[8])) {
       return 'B';
     }
 
-    if (!keyIsDown(222) && keyIsDown(186) && !keyIsDown(76) && !keyIsDown(188) &&
-      !keyIsDown(85) && !keyIsDown(89) && !keyIsDown(84) && !keyIsDown(52) && !keyIsDown(56)) {
+    if (!keyIsDown(keyBindings[0]) && keyIsDown(keyBindings[1]) && !keyIsDown(keyBindings[2]) && !keyIsDown(keyBindings[3]) &&
+      !keyIsDown(keyBindings[4]) && !keyIsDown(keyBindings[5]) && !keyIsDown(keyBindings[6]) && !keyIsDown(keyBindings[7]) && !keyIsDown(keyBindings[8])) {
       return 'C';
     }
 
-    if (!keyIsDown(222) && !keyIsDown(186) && keyIsDown(76) && !keyIsDown(188) &&
-      !keyIsDown(85) && !keyIsDown(89) && !keyIsDown(84) && !keyIsDown(52) && !keyIsDown(56)) {
+    if (!keyIsDown(keyBindings[0]) && !keyIsDown(keyBindings[1]) && keyIsDown(keyBindings[2]) && !keyIsDown(keyBindings[3]) &&
+      !keyIsDown(keyBindings[4]) && !keyIsDown(keyBindings[5]) && !keyIsDown(keyBindings[6]) && !keyIsDown(keyBindings[7]) && !keyIsDown(keyBindings[8])) {
       return 'Db';
     }
 
     return null;
-  };
+};
+
 
   // Play the note if it exists
   const playNote = (note: NoteKeys | null) => {

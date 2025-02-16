@@ -1,39 +1,32 @@
+// Settings.tsx
 import React, { useState } from 'react';
+import { defaultKeyBindings } from './key';  // Import default key bindings
 import './Settings.css';
 import NavBar from './NavBar';
 
-// Special mapping for better display
-const keyDisplayMap: Record<string, string> = {
-  "Quote": "'",
-  "Semicolon": ";",
-  "Comma": ",",
-  "Period": ".",
-  "Slash": "/",
-  "Backslash": "\\",
-  "BracketLeft": "[",
-  "BracketRight": "]",
-  "Minus": "-",
-  "Equal": "="
-};
-
 interface SettingsProps {
-  keyBindings: Record<string, string>;
-  onSave: (bindings: Record<string, string>) => void;
+  keyBindings: Record<number, number>;
+  onSave: (bindings: Record<number, number>) => void;
   onReset: () => void;
 }
 
 const Settings: React.FC<SettingsProps> = ({ keyBindings, onSave, onReset }) => {
-  const [editing, setEditing] = useState<string | null>(null);
+  const [editing, setEditing] = useState<number | null>(null); // To track which key is being edited
+  const [currentKeyBindings, setCurrentKeyBindings] = useState(keyBindings);
 
-  const handleClick = (note: string) => {
-    setEditing(note);
+  // Handle key press event to update the key binding
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (editing !== null) {
+      const newKeyBindings = { ...currentKeyBindings };
+      newKeyBindings[editing] = event.keyCode; // Update the key binding for the selected note
+      setCurrentKeyBindings(newKeyBindings);
+      setEditing(null); // Stop editing once a key is selected
+    }
   };
 
-  const handleKeyDown = (event: React.KeyboardEvent) => {
-    if (editing) {
-      onSave({ ...keyBindings, [editing]: event.code });
-      setEditing(null);
-    }
+  // Reset to default key bindings
+  const resetToDefault = () => {
+    setCurrentKeyBindings(defaultKeyBindings);
   };
 
   return (
@@ -41,18 +34,18 @@ const Settings: React.FC<SettingsProps> = ({ keyBindings, onSave, onReset }) => 
       <NavBar />
       <h2 className="set-title">Customize Key Bindings</h2>
       <div className="keys-grid">
-        {Object.entries(keyBindings).map(([note, key]) => (
+        {Object.entries(currentKeyBindings).map(([index, key]) => (
           <div
-            key={note}
+            key={index}
             className="key-circle"
-            onClick={() => handleClick(note)}
+            onClick={() => setEditing(Number(index))} // Set the editing index
           >
-            {editing === note ? "Press a key..." : `${note}: ${keyDisplayMap[key] || key}`}
+            {editing === Number(index) ? "Press a key..." : `${index}: ${key}`}
           </div>
         ))}
       </div>
-      <button onClick={() => onSave(keyBindings)}>Save</button>
-      <button onClick={onReset}>Reset to Default</button> {/* Reset button */}
+      <button onClick={() => onSave(currentKeyBindings)}>Save</button>
+      <button onClick={resetToDefault}>Reset to Default</button> {/* Reset button */}
     </div>
   );
 };
