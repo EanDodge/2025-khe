@@ -1,0 +1,62 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+.navbar {
+    position: absolute;
+    left: 0vh;
+    top: -0vh;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    min-height: 8vh;
+    background-color: #297373;
+    color: white;
+    width: 140vh;
+}
+.logo {
+    position: fixed;
+    top: -2.5vh; 
+    left: 0vh;
+    transform: translateY(-50%); 
+    transform: rotate(10deg);
+    width: 200px;
+    height: 300px;
+  }
+  
+  .logo img {
+    width: 8vh;
+    height: 8vh;
+    object-fit: contain;
+  }
+
+
+.nav-links {
+    display: flex;
+    justify-content: space-around;
+    width: 80%;
+}
+
+.nav-links li {
+    list-style: none;
+    padding-right: 0;
+}
+
+.nav-links a {
+    color: whitesmoke;
+    text-decoration: none;
+    letter-spacing: 3px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+#sketch-container {
+    width: 100%;
+    height: calc(100vh - 8vh);
+}
