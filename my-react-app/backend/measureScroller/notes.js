@@ -10,18 +10,18 @@ const noteValues = {
 
 // integers associated with pitches to determine where to draw on lines
 const pitchValues = {
-  "Db": 0,
-  "C": 1,
-  "B": 2,
-  "Bb": 3,
-  "A": 4,
-  "Ab": 5,
-  "G": 6,
-  "Gb": 7, // or F#
-  "F": 8,
-  "E": 9,
-  "Eb": 10,
-  "D": 11
+  "Db": 0.5,
+  "C": 1.0,
+  "B": 2.0,
+  "Bb": 2.5,
+  "A": 3.0,
+  "Ab": 3.5, // or G#
+  "G": 4.0,
+  "Gb": 4.5, // or F#
+  "F": 5.0,
+  "E": 6.0,
+  "Eb": 6.5,
+  "D": 7.0
 }
 
 class Note {
@@ -142,9 +142,14 @@ function setup() {
   // hot cross buns
 
   // add notes
-  testMeasure1.addNote(testNote1);
-  testMeasure1.addNote(testNote2);
-  testMeasure1.addNote(testNote3);
+  testMeasure1.addNote(new Note("Db", 'e'));
+  testMeasure1.addNote(new Note("C", 'e'));
+  testMeasure1.addNote(new Note("B", 'e'));
+  testMeasure1.addNote(new Note("Bb", 'e'));
+  testMeasure1.addNote(new Note("A", 'e'));
+  testMeasure1.addNote(new Note("Ab", 'e'));
+  testMeasure1.addNote(new Note("G", 'e'));
+  testMeasure1.addNote(new Note("Gb", 'e'));
 
   /*
   testMeasure2.addNote(testNote1);
@@ -168,11 +173,9 @@ function setup() {
   // add measures
   testSong.addMeasure(testMeasure1);
   testSong.addMeasure(testMeasure2);
-
-  /*
   testSong.addMeasure(testMeasure3);
-  testSong.addMeasure(testMeasure4);
-  */
+  // testSong.addMeasure(testMeasure4);
+  
 
   // creates canvas size based on however many measures there are
   createCanvas(400 * testSong.length(), 400); 
@@ -186,7 +189,7 @@ function draw() {
 
   // draw staff
   for (let i = 0; i < 5; i++) {
-    line(50, 50 + i * 30, width - 50, 50 + i * 30);
+    line(50, 50 + i * 30, testSong.length() * 300 + 50, 50 + i * 30);
   }
   
   // draw measure lines
@@ -200,21 +203,67 @@ function draw() {
   for (let i = 0; i < testSong.length(); ++i) {
     for (let j = 0; j < testSong.measures[i].length(); ++j) {
       let flat = false;
+      let sharp = false;
 
       // note length is used to calculate where it is spacing wise in the measure,
       // note pitch is used to determine which line it appears on
       let noteLength = noteValues[testSong.measures[i].notes[j].length];
       let notePitch = pitchValues[testSong.measures[i].notes[j].pitch];
 
-      // checks for flat
-      // if (...)
+      // checks for flat/sharp
+      // changes position to the natural counterpart
+      switch(notePitch) {
+        case 0.5: // Db or C#
+          sharp = true;
+          flat = false;
+          notePitch = 1;
+          break;
+        case 2.5: // Bb
+          sharp = false;
+          flat = true;
+          notePitch = 2;
+          break;
+        case 3.5: // Ab or G#
+          sharp = true;
+          flat = false;
+          notePitch = 4;
+          break;
+        case 4.5: // Gb or F#
+          sharp = true;
+          flat = false;
+          notePitch = 5;
+          break;  
+        case 6.5: // Eb
+          sharp = false;
+          flat = true;
+          notePitch = 6;
+          break;
+        default: // anything else
+          sharp = false;
+          flat = false;
+      }
 
       // calculates note placement
-      // z represents how many notes are in the measure
+      // z represents the distance between the amount of notes in each measure
       let z = 300 / testSong.measures[i].length();
-      let y = notePitch * 15;
+      let y = 15 * notePitch + 80;
 
-      circle(x, y, 30);
+      // if flat, make it red
+      // if sharp make it blue
+      // else, regular color
+      if (flat) {
+        fill(255, 0, 0);
+        circle(x, y, 30);
+      }
+      else if (sharp) {
+        fill(0, 0, 255);
+        circle(x, y, 30);
+      }
+      else {
+        fill(255);
+        circle(x, y, 30);
+      }
+      
       console.log("placed note #" + j);
       console.log("placed circle at: " + (x + 50) + ", " + (y + 25));
       x += z;                                                                                                                                                                              
