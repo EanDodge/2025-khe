@@ -1,0 +1,19 @@
+{
+  "name": "2025-khe",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EanDodge/2025-khe.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/EanDodge/2025-khe/issues"
+  },
+  "homepage": "https://github.com/EanDodge/2025-khe#readme",
+  "description": ""
+}
