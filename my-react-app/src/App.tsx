@@ -1,12 +1,13 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { useState } from 'react';
 import Home from './Home';  
 import Play from './Play'; 
 import Tutorial from './Tutorial'; 
 import Settings from './Settings';
+import MusicPlayer from './MusicPlayer'; // Adjust the path if needed
 import { defaultKeyBindings } from './key'; // Assuming this is where your default bindings are stored
 
-function App() {
+function AppContent() {
   const [keyBindingsState, setKeyBindingsState] = useState<Record<number, number>>(() => {
     // On initial load, check if we have saved key bindings in localStorage
     const savedKeyBindings = localStorage.getItem('keyBindings');
@@ -32,9 +33,14 @@ function App() {
     setKeyBindingsState(defaultKeyBindings); // Reset to default
     localStorage.setItem('keyBindings', JSON.stringify(defaultKeyBindings)); // Save default to localStorage
   };
+  const location = useLocation();
+  const noMusicPages = ['/Play', '/Tutorial'];
+  const shouldPlayMusic = !noMusicPages.includes(location.pathname);
 
   return (
-    <Router>
+    
+    <>
+      <MusicPlayer shouldPlay={shouldPlayMusic}/>
       <Routes>
         <Route path="/" element={<Home />} />  
         <Route 
@@ -56,6 +62,13 @@ function App() {
           } 
         />   
       </Routes>
+    </>
+  );
+}
+function App() {
+  return (
+    <Router>
+      <AppContent />
     </Router>
   );
 }
