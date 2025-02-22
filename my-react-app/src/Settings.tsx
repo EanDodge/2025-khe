@@ -7,10 +7,9 @@ import NavBar from './NavBar';
 interface SettingsProps {
   keyBindings: Record<number, number>;
   onSave: (bindings: Record<number, number>) => void;
-  onReset: () => void;
 }
 
-const Settings: React.FC<SettingsProps> = ({ keyBindings, onSave, onReset }) => {
+const Settings: React.FC<SettingsProps> = ({ keyBindings, onSave }) => {
   const [editing, setEditing] = useState<number | null>(null); // To track which key is being edited
   const [currentKeyBindings, setCurrentKeyBindings] = useState(keyBindings);
 

@@ -57,7 +57,6 @@ function AppContent() {
             <Settings 
               keyBindings={keyBindingsState} 
               onSave={handleSaveKeyBindings} 
-              onReset={handleResetKeyBindings} 
             />
           } 
         />   

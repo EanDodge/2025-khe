@@ -1,5 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import React, { useEffect } from 'react';
+import {  Link } from 'react-router-dom';
 import saxLogo1 from '../../Mockups/SaxBlackWhite.png'
 import './Tutorial.css'
 
