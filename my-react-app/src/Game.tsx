@@ -152,6 +152,7 @@ const Game: React.FC = () => {
 
         let currentX = 50 + scrollX;
         song.measures.forEach((measure, i) => {
+            i;
             p5.line(currentX, 50, currentX, 170);
             measure.notes.forEach((note, j) => {
                 const z = measureWidth / measure.notes.length;

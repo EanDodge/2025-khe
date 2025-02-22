@@ -82,7 +82,7 @@ console.log(keyBindings[0]);
   // Function to determine the note based on pressed keys
   const determineNote = (p5: p5Types): NoteKeys | null => {
     const keyIsDown = (key: number) => pressedKeys.current.has(key);
-
+    p5;
     // Check for each note based on the key bindings
     if (keyIsDown(keyBindings[0]) && keyIsDown(keyBindings[1]) && keyIsDown(keyBindings[2]) && !keyIsDown(keyBindings[3]) &&
       keyIsDown(keyBindings[4]) && keyIsDown(keyBindings[5]) && keyIsDown(keyBindings[6]) && keyIsDown(keyBindings[7]) && !keyIsDown(keyBindings[8])) {

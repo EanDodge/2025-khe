@@ -28,11 +28,11 @@ function AppContent() {
   };
 
   // Reset to default key bindings
-  const handleResetKeyBindings = () => {
-    console.log('Resetting to default key bindings');
-    setKeyBindingsState(defaultKeyBindings); // Reset to default
-    localStorage.setItem('keyBindings', JSON.stringify(defaultKeyBindings)); // Save default to localStorage
-  };
+  // const handleResetKeyBindings = () => {
+  //   console.log('Resetting to default key bindings');
+  //   setKeyBindingsState(defaultKeyBindings); // Reset to default
+  //   localStorage.setItem('keyBindings', JSON.stringify(defaultKeyBindings)); // Save default to localStorage
+  // };
   const location = useLocation();
   const noMusicPages = ['/Play', '/Tutorial'];
   const shouldPlayMusic = !noMusicPages.includes(location.pathname);
