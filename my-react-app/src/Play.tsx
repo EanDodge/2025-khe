@@ -80,6 +80,7 @@ function Tutorial({ keyBindings }: TutorialProps) { /*React.FC<TutorialProps> = 
 console.log(keyBindings[0]);
   // Function to determine the note based on pressed keys
   const determineNote = (p5: p5Types): NoteKeys | null => {
+    p5;
     const keyIsDown = (key: number) => pressedKeys.current.has(key);
 
     // Check for each note based on the key bindings
