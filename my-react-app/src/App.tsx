@@ -38,7 +38,6 @@ function AppContent() {
   const shouldPlayMusic = !noMusicPages.includes(location.pathname);
 
   return (
-    
     <>
       <MusicPlayer shouldPlay={shouldPlayMusic}/>
       <Routes>
@@ -64,9 +63,10 @@ function AppContent() {
     </>
   );
 }
+
 function App() {
   return (
-    <Router>
+    <Router basename='/Haxophone'>
       <AppContent />
     </Router>
   );
