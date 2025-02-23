@@ -4,7 +4,7 @@ const MusicPlayer = ({ shouldPlay = true }) => {
   return (
     <div>
       <ReactPlayer
-        url="/haxophoneBackground.mp3"  // Replace with your actual audio file path
+        url="/Haxophone/haxophoneBackground.mp3"  // Replace with your actual GitHub Pages URL
         playing={shouldPlay}  // Automatically start playing
         controls={false} // Hide controls (no UI elements)
         volume={0.8}     // Adjust volume (0 to 1)
