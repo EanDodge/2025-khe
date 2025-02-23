@@ -7,9 +7,11 @@ import NavBar from './NavBar';
 interface SettingsProps {
   keyBindings: Record<number, number>;
   onSave: (bindings: Record<number, number>) => void;
+  volume: number;
+  onVolumeChange: (volume: number) => void; // Add the function to update volume
 }
 
-const Settings: React.FC<SettingsProps> = ({ keyBindings, onSave }) => {
+const Settings: React.FC<SettingsProps> = ({ keyBindings, onSave, volume, onVolumeChange }) => {
   const [editing, setEditing] = useState<number | null>(null); // To track which key is being edited
   const [currentKeyBindings, setCurrentKeyBindings] = useState(keyBindings);
 
@@ -42,6 +44,19 @@ const Settings: React.FC<SettingsProps> = ({ keyBindings, onSave }) => {
             {editing === Number(index) ? "Press a key..." : `${index}: ${key}`}
           </div>
         ))}
+      </div>
+      <div className="volume-slider">
+        <label htmlFor="volume">Volume: {volume}</label>
+        <input
+          type="range"
+          id="volume"
+          name="volume"
+          min="0"
+          max="1"
+          step="0.01"
+          value={volume}
+          onChange={(e) => onVolumeChange(Number(e.target.value))} // Use the passed function to update volume
+        />
       </div>
       <button onClick={() => onSave(currentKeyBindings)}>Save</button>
       <button onClick={resetToDefault}>Reset to Default</button> {/* Reset button */}

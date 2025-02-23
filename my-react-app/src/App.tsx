@@ -9,56 +9,42 @@ import { defaultKeyBindings } from './key'; // Assuming this is where your defau
 
 function AppContent() {
   const [keyBindingsState, setKeyBindingsState] = useState<Record<number, number>>(() => {
-    // On initial load, check if we have saved key bindings in localStorage
     const savedKeyBindings = localStorage.getItem('keyBindings');
     if (savedKeyBindings) {
       console.log('Loaded saved key bindings from localStorage:', savedKeyBindings);
-      return JSON.parse(savedKeyBindings); // Return the saved key bindings
+      return JSON.parse(savedKeyBindings);
     } else {
       console.log('No saved key bindings found, using default values');
-      return defaultKeyBindings; // If nothing is saved, use default bindings
+      return defaultKeyBindings;
     }
   });
+  const [mainVolume, setMainVolume] = useState(0.8);
 
-  // Save key bindings to localStorage whenever they change
   const handleSaveKeyBindings = (newKeyBindings: Record<number, number>) => {
     console.log('Saving new key bindings:', newKeyBindings);
-    setKeyBindingsState(newKeyBindings); // Update state
-    localStorage.setItem('keyBindings', JSON.stringify(newKeyBindings)); // Save to localStorage
+    setKeyBindingsState(newKeyBindings);
+    localStorage.setItem('keyBindings', JSON.stringify(newKeyBindings));
   };
 
-  // Reset to default key bindings
-  // const handleResetKeyBindings = () => {
-  //   console.log('Resetting to default key bindings');
-  //   setKeyBindingsState(defaultKeyBindings); // Reset to default
-  //   localStorage.setItem('keyBindings', JSON.stringify(defaultKeyBindings)); // Save default to localStorage
-  // };
   const location = useLocation();
   const noMusicPages = ['/Play', '/Tutorial'];
   const shouldPlayMusic = !noMusicPages.includes(location.pathname);
 
   return (
     <>
-      <MusicPlayer shouldPlay={shouldPlayMusic}/>
+      <MusicPlayer shouldPlay={shouldPlayMusic} volume={mainVolume} />
       <Routes>
         <Route path="/" element={<Home />} />  
-        <Route 
-          path="/Play" 
-          element={<Play keyBindings={keyBindingsState}/>} 
-        /> 
-        <Route 
-          path="/Tutorial" 
-          element={<Tutorial keyBindings={keyBindingsState}/>} 
-        />  
-        <Route 
-          path="/Settings" 
-          element={
-            <Settings 
-              keyBindings={keyBindingsState} 
-              onSave={handleSaveKeyBindings} 
-            />
-          } 
-        />   
+        <Route path="/Play" element={<Play keyBindings={keyBindingsState}/>} /> 
+        <Route path="/Tutorial" element={<Tutorial keyBindings={keyBindingsState}/>} />  
+        <Route path="/Settings" element={
+          <Settings 
+            keyBindings={keyBindingsState} 
+            onSave={handleSaveKeyBindings} 
+            volume={mainVolume}
+            onVolumeChange={setMainVolume} // Pass the function to update volume
+          />
+        } />   
       </Routes>
     </>
   );
