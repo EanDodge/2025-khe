@@ -48,6 +48,7 @@ function Tutorial({ keyBindings }: TutorialProps) { /*React.FC<TutorialProps> = 
   const setup = (p5: p5Types, canvasParentRef: Element) => {
     p5.createCanvas(600, 400).parent(canvasParentRef);
     p5.textSize(50);
+    p5.text
     Object.values(notes.current).forEach(note => {
       if (note) note.playMode('sustain');
     });

@@ -1,13 +1,18 @@
 .game-sketch-container {
+    position: absolute;
+    top: 35vh;
     left:-5vh;
     display: flex;
     justify-content: space-between;
     gap: 20px;
   }
   
-  .game-container,
-  .sketch-container {
-    flex: 1; /* Both components take equal width */
+  
+  .sketch-container1 {
+    position: absolute;
+    top: 15vh;
+    left: 100vh;
+    gap: 20px; 
   }
   
   .tutor {

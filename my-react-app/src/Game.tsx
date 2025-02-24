@@ -127,7 +127,7 @@ const Game: React.FC = () => {
     });
 
     let scrollX = song.measures.length * 300;
-    const scrollSpeed = 5;
+    const scrollSpeed = 3;
     const measureWidth = 300;
     const canvasWidth = 800;
 

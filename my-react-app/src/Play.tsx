@@ -54,7 +54,8 @@ function Tutorial({ keyBindings }: TutorialProps) { /*React.FC<TutorialProps> = 
 
   // Drawing function for canvas
   const draw = (p5: p5Types) => {
-    p5.background(220);
+    p5.clear(0, 0, 0, 0);
+    p5.fill(255);
     p5.text(currentNote.current || '', 300, 200);
     // Key positions with explicit type
     const keyPositions: KeyPositions = {
@@ -77,7 +78,6 @@ function Tutorial({ keyBindings }: TutorialProps) { /*React.FC<TutorialProps> = 
       }
     });
   };
-console.log(keyBindings[0]);
   // Function to determine the note based on pressed keys
   const determineNote = (p5: p5Types): NoteKeys | null => {
     p5;
@@ -187,6 +187,8 @@ console.log(keyBindings[0]);
       <h1 className="tut-title">Haxophone</h1>
       <div className="game-sketch-container">
         <Game />
+      </div>
+      <div className="sketch-container1">
         <Sketch
           className="tutor"
           preload={preload}
