@@ -22,6 +22,8 @@ interface TutorialProps {
 }
 
 function Tutorial({ keyBindings }: TutorialProps) { /*React.FC<TutorialProps> = ({ keyBindings }) =>*/ 
+    //const [currentKeyBindings, setCurrentKeyBindings] = useState(keyBindings);
+  
   // Initialize notes and pressed keys
   const notes = useRef<Notes>({
     B: null, Bb: null, A: null, Ab: null, G: null, Gb: null,
@@ -185,6 +187,17 @@ console.log(keyBindings[0]);
     <div>
       <NavBar />
       <h1 className="tut-title">Tutorial</h1>
+      <div className="key-binds">
+        <h2>Key Bindings:</h2>
+        </div>
+      {Object.entries(keyBindings).map(([index, key]) => (
+          <div
+            key={index}
+            className="tut-notes">
+          {`${index}: ${String.fromCharCode(key)}`}
+          </div>
+          
+        ))}
       <Sketch
         className="tutor"
         preload={preload}
@@ -193,6 +206,7 @@ console.log(keyBindings[0]);
         keyPressed={keyPressed}
         keyReleased={keyReleased}
       />
+      <h3 className="tut-instructions">Press the keys to play notes!</h3>
     </div>
   );
 }

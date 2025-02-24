@@ -6,6 +6,7 @@ import Tutorial from './Tutorial';
 import Settings from './Settings';
 import MusicPlayer from './MusicPlayer'; // Adjust the path if needed
 import { defaultKeyBindings } from './key'; // Assuming this is where your default bindings are stored
+import './App.css';
 
 function AppContent() {
   const [keyBindingsState, setKeyBindingsState] = useState<Record<number, number>>(() => {
@@ -31,7 +32,7 @@ function AppContent() {
   const shouldPlayMusic = !noMusicPages.includes(location.pathname);
 
   return (
-    <>
+    <div className = "App">
       <MusicPlayer shouldPlay={shouldPlayMusic} volume={mainVolume} />
       <Routes>
         <Route path="/" element={<Home />} />  
@@ -46,7 +47,7 @@ function AppContent() {
           />
         } />   
       </Routes>
-    </>
+    </div>
   );
 }
 

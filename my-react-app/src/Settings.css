@@ -1,6 +1,6 @@
 .settings-container {
     text-align: center;
-    margin-top: 20px;
+    margin-top: 100px;
   }
   
   .key-bindings {
@@ -9,6 +9,15 @@
     align-items: center;
   }
   .set-title {
+    position: absolute;
+    top : 9vh;
+    left : 1vh;
+    color: rgb(211, 133, 15);
+  }
+  .settings-title{
+    position: absolute;
+    top : 15vh;
+    left : 92vh;
     color: rgb(211, 133, 15);
   }
   
@@ -37,9 +46,32 @@
     font-size: 16px;
   }
   .volume-slider{
+    position: absolute;
     margin-top: 20px;
     padding: 10px;
     font-size: 16px;
-    left: 2vh;
-    top: 0vh;
+    right: 15vh;
+    top: 10vh;
+    color: white;
+  }
+  .key-circle {
+    position: relative;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: rgb(211, 133, 15);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    color: white;
+    top : 1vh;
+    left : 15vh;
+  }
+  .button-container {
+    position: absolute;
+    bottom: 0vh;
+    left: 10vh;
   }
