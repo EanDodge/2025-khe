@@ -138,11 +138,7 @@ const Game: React.FC = () => {
     /** P5 Setup */
     const setup = (p5: p5Types, canvasParentRef: Element) => {
         p5.createCanvas(canvasWidth, 400).parent(canvasParentRef);
-        noteImageq = p5.loadImage("/Haxophone/wholeNote.png", (img) => {
-            console.log("Image loaded successfully");
-        }, (err) => {
-            console.error("Failed to load image", err);
-        });
+        noteImageq = p5.loadImage("/Haxophone/wholeNote.png");
         noteImageh = p5.loadImage("/Haxophone/halfNote.png");
         noteImagee = p5.loadImage("/Haxophone/quaterNote.png");
 
