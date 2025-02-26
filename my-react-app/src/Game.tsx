@@ -98,7 +98,7 @@ class Song {
 /** React-P5 Component */
 const Game: React.FC = () => {
     const [song] = useState(() => {
-        const newSong = new Song("Hot Cross Buns", 60);
+        const newSong = new Song("Hot Cross Buns", 40);
         const measures = Array.from({ length: 4 }, () => new Measure());
 
         measures[0].addNote(new Note("B", "q"));
@@ -127,13 +127,27 @@ const Game: React.FC = () => {
     });
 
     let scrollX = song.measures.length * 300;
-    const scrollSpeed = 3;
+    const scrollSpeed = 2;
     const measureWidth = 300;
     const canvasWidth = 800;
+    let noteImageq: p5Types.Image;
+    let noteImageh: p5Types.Image;
+    let noteImagee: p5Types.Image;
+
 
     /** P5 Setup */
     const setup = (p5: p5Types, canvasParentRef: Element) => {
         p5.createCanvas(canvasWidth, 400).parent(canvasParentRef);
+        noteImageq = p5.loadImage("/Haxophone/wholeNote.png", (img) => {
+            console.log("Image loaded successfully");
+        }, (err) => {
+            console.error("Failed to load image", err);
+        });
+        noteImageh = p5.loadImage("/Haxophone/halfNote.png");
+        noteImagee = p5.loadImage("/Haxophone/quaterNote.png");
+
+        p5.imageMode(p5.CENTER);
+        
     };
 
     /** P5 Draw */
@@ -165,12 +179,22 @@ const Game: React.FC = () => {
 
                     y = 15 * notePitch + 80;
 
-                    p5.fill(isFlat ? "red" : isSharp ? "blue" : "white");
-                    p5.circle(currentX + j * z + z / 2, y, 30);
-                } else {
-                    p5.fill(0);
-                    p5.rect(currentX + j * z + z / 4, y - 5, z / 2, 10);
+                    if (noteImageq) {
+                        if(note.length == "q") {
+                        p5.image(noteImageq, currentX + j * z + z / 2, y, 30, 30);
+                        }
+                        else if(note.length == "h") {
+                            p5.image(noteImageh, currentX + j * z + z / 2, y, 30, 30);
+                        }
+                        else if(note.length == "e") {
+                            p5.image(noteImagee, currentX + j * z + z / 2, y, 30, 30);
+                        }
+                    }
+                    else {
+                        p5.fill(isFlat ? "red" : isSharp ? "blue" : "white");
+                        p5.circle(currentX + j * z + z / 2, y, 30);
                 }
+            }
             });
             currentX += measureWidth;
         });
