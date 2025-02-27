@@ -134,16 +134,14 @@ const Game: React.FC = () => {
     let noteImageh: p5Types.Image;
     let noteImagee: p5Types.Image;
 
-
     /** P5 Setup */
     const setup = (p5: p5Types, canvasParentRef: Element) => {
         p5.createCanvas(canvasWidth, 400).parent(canvasParentRef);
-        noteImageq = p5.loadImage("/Haxophone/wholeNote.png");
+        noteImageq = p5.loadImage("/Haxophone/quaterNote.png");
         noteImageh = p5.loadImage("/Haxophone/halfNote.png");
-        noteImagee = p5.loadImage("/Haxophone/quaterNote.png");
+        noteImagee = p5.loadImage("/Haxophone/eighthNote.png");
 
         p5.imageMode(p5.CENTER);
-        
     };
 
     /** P5 Draw */
@@ -162,38 +160,39 @@ const Game: React.FC = () => {
 
         let currentX = 50 + scrollX;
         song.measures.forEach((measure, i) => {
-            i;
             p5.line(currentX, 50, currentX, 170);
-            measure.notes.forEach((note, j) => {
-                const z = measureWidth / measure.notes.length;
-                let y = 100;
+            let positionIndex = 0;
+            measure.notes.forEach((note) => {
+                let noteLength = noteValues[note.length] ?? 0;
+                let z = measureWidth / 8; // Split measure into 8 parts
 
+                let y = 100;
                 if (note.pitch !== "R") {
                     let notePitch = pitchValues[note.pitch] ?? 0;
-                    let isFlat = ["Bb", "Eb"].includes(note.pitch);
-                    let isSharp = ["Db", "Ab", "Gb"].includes(note.pitch);
-
                     y = 15 * notePitch + 80;
 
-                    if (noteImageq) {
-                        if(note.length == "q") {
-                        p5.image(noteImageq, currentX + j * z + z / 2, y, 30, 30);
-                        }
-                        else if(note.length == "h") {
-                            p5.image(noteImageh, currentX + j * z + z / 2, y, 30, 30);
-                        }
-                        else if(note.length == "e") {
-                            p5.image(noteImagee, currentX + j * z + z / 2, y, 30, 30);
-                        }
+                    if (note.length === "q") {
+                        p5.image(noteImageq, currentX + positionIndex * z + z / 2, y, 30, 30);
+                        positionIndex += 2; // Skip 2 positions for quarter note
+                    } else if (note.length === "h") {
+                        p5.image(noteImageh, currentX + positionIndex * z + z / 2, y, 30, 30);
+                        positionIndex += 4; // Skip 4 positions for half note
+                    } else if (note.length === "e") {
+                        p5.image(noteImagee, currentX + positionIndex * z + z / 2, y-10, 30, 30);
+                        positionIndex += 1; // Skip 1 position for eighth note
                     }
-                    else {
-                        p5.fill(isFlat ? "red" : isSharp ? "blue" : "white");
-                        p5.circle(currentX + j * z + z / 2, y, 30);
+                } else {
+                    p5.fill(0);
+                    p5.circle(currentX + positionIndex * z + z / 2, y, 30);
+                    positionIndex += noteLength * 2; // Skip positions based on note length
                 }
-            }
             });
             currentX += measureWidth;
         });
+        p5.line(currentX, 50, currentX, 170);
+        currentX += 5;
+        p5.line(currentX, 50, currentX, 170);
+
     };
 
     return <Sketch setup={setup} draw={draw} />;
