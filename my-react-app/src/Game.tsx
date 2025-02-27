@@ -159,7 +159,7 @@ const Game: React.FC = () => {
         }
 
         let currentX = 50 + scrollX;
-        song.measures.forEach((measure, i) => {
+        song.measures.forEach((measure) => {
             p5.line(currentX, 50, currentX, 170);
             let positionIndex = 0;
             measure.notes.forEach((note) => {
